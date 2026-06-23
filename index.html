@@ -167,43 +167,78 @@
     </div>
 
     <script>
-        // Navigate through core layout steps
+        // Ensure everything is hidden except Step 1 when the page loads
+        document.addEventListener("DOMContentLoaded", function() {
+            resetToStepOne();
+        });
+
+        function resetToStepOne() {
+            document.querySelectorAll('.step-view').forEach(function(el) { el.style.display = 'none'; });
+            document.querySelectorAll('.penguin-content').forEach(function(el) { el.style.display = 'none'; });
+            
+            // Force only step 1 to show physically
+            var step1 = document.getElementById('step-1');
+            if(step1) {
+                step1.style.setProperty('display', 'flex', 'important');
+                step1.classList.remove('hidden');
+            }
+        }
+
+        // Navigate through core layout steps safely using direct style overrides
+         Zion
         function nextStep(stepNumber) {
-            document.querySelectorAll('.step-view').forEach(element => {
-                element.classList.add('hidden');
+            // Hide everything completely
+            document.querySelectorAll('.step-view').forEach(function(el) { 
+                el.style.setProperty('display', 'none', 'important'); 
             });
-            document.querySelectorAll('.penguin-content').forEach(element => {
-                element.classList.add('hidden');
+            document.querySelectorAll('.penguin-content').forEach(function(el) { 
+                el.style.setProperty('display', 'none', 'important'); 
             });
-            document.getElementById(`step-${stepNumber}`).classList.remove('hidden');
+
+            // Target the specific step to show
+            var targetStep = document.getElementById('step-' + stepNumber);
+            if (targetStep) {
+                targetStep.style.setProperty('display', 'flex', 'important');
+                targetStep.classList.remove('hidden');
+            }
         }
 
         // Display contents behind individual gift options
         function showPenguinContent(contentType) {
-            document.getElementById('step-3').classList.add('hidden');
-            document.getElementById(`content-${contentType}`).classList.remove('hidden');
+            document.querySelectorAll('.step-view').forEach(function(el) { 
+                el.style.setProperty('display', 'none', 'important'); 
+            });
+            
+            var targetContent = document.getElementById('content-' + contentType);
+            if (targetContent) {
+                targetContent.style.setProperty('display', 'flex', 'important');
+                targetContent.classList.remove('hidden');
+            }
         }
 
         // Return user to original matrix choice
         function backToChoices() {
-            document.querySelectorAll('.penguin-content').forEach(element => {
-                element.classList.add('hidden');
-            });
-            document.getElementById('step-3').classList.remove('hidden');
+            nextStep(3);
         }
 
         // Real-time Text updates from Customizer Panel
         function updateText(targetId, value) {
-            document.getElementById(targetId).innerText = value;
+            var target = document.getElementById(targetId);
+            if(target) {
+                target.innerText = value;
+            }
         }
 
         // Handle file reader pipeline for images locally
         function handleImageUpload(event, targetImageId) {
-            const file = event.target.files[0];
+            var file = event.target.files[0];
             if (file) {
-                const reader = new FileReader();
+                var reader = new FileReader();
                 reader.onload = function(e) {
-                    document.getElementById(targetImageId).src = e.target.result;
+                    var img = document.getElementById(targetImageId);
+                    if(img) {
+                        img.src = e.target.result;
+                    }
                 };
                 reader.readAsDataURL(file);
             }
@@ -211,8 +246,14 @@
 
         // Toggle customizer visibility
         function toggleCustomizer() {
-            const panel = document.getElementById('customizer-panel');
-            panel.classList.toggle('hidden');
+            var panel = document.getElementById('customizer-panel');
+            if(panel) {
+                if (panel.style.display === 'block') {
+                    panel.style.setProperty('display', 'none', 'important');
+                } else {
+                    panel.style.setProperty('display', 'block', 'important');
+                }
+            }
         }
 
         // Secret Shortcut Listener: Ctrl + Shift + K
