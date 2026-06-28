@@ -2,249 +2,184 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>A Special Gift For You</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise for Ennavl</title>
     <style>
-        body {
-            font-family: 'Quicksand', sans-serif;
-            background-color: #ffeef2;
-            touch-action: manipulation;
+        :root {
+            --bg-blue: #7fa9d8;
+            --bg-dark-green: #0a2f1d;
+            --bg-light-green: #14422b;
+            --love-pink: #ff4d79;
         }
-        .heading-font {
-            font-family: 'Fredoka One', cursive;
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background-color: #111; color: #fff; overflow-x: hidden; }
+
+        .frame {
+            display: none;
+            min-height: 100vh;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+            padding: 20px;
         }
-        .bg-pattern {
-            background-color: #ffeef2;
-            background-image: radial-gradient(#ffccd5 2px, transparent 2px);
-            background-size: 32px 32px;
-        }
-        .bouncing {
-            animation: bounce 2s infinite;
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        /* Mobile-first scrollbar styling for the gallery/letter inside the card */
-        .custom-scroll::-webkit-scrollbar {
-            width: 4px;
-        }
-        .custom-scroll::-webkit-scrollbar-track {
-            background: #ffeef2;
-        }
-        .custom-scroll::-webkit-scrollbar-thumb {
-            background: #ffccd5;
-            border-radius: 10px;
-        }
+
+        .active { display: flex; }
+
+        /* FRAME 1: PASSCODE CODE */
+        #frame1 { background-color: var(--bg-blue); color: #333; }
+        .passcode-container { display: flex; background: #fff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-width: 700px; width: 100%; gap: 30px; }
+        .photo-holder { flex: 1; background: #f9f9f9; padding: 15px; border-radius: 10px; border: 1px solid #ddd; text-align: center; }
+        .photo-placeholder { background: #e0e0e0; height: 200px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; color: #666; }
+        .keypad-side { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .code-display { display: flex; gap: 10px; margin-bottom: 20px; }
+        .code-dot { width: 40px; height: 40px; border: 2px solid #333; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; }
+        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .key { width: 50px; height: 50px; background: #f0f0f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: none; font-size: 16px; }
+        .key:active { background: #ddd; }
+
+        /* FRAME 2 & 3: PANDAS & SURPRISE */
+        #frame2 { background: radial-gradient(circle, var(--bg-light-green), var(--bg-dark-green)); }
+        #frame3 { background: radial-gradient(circle, #1a4a30, #081e12); }
+        .card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 40px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.2); text-align: center; max-width: 500px; width: 100%; }
+        .btn { background: var(--love-pink); color: white; border: none; padding: 12px 35px; font-size: 18px; border-radius: 25px; cursor: pointer; margin-top: 25px; font-weight: bold; transition: 0.3s; }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255, 77, 121, 0.4); }
+        .btn-no { background: #555; margin-left: 10px; }
+
+        /* FRAME 4: SCRAPBOOK GALLERY */
+        #frame4 { background: #18251c; padding-bottom: 100px; }
+        .scrapbook { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1000px; width: 100%; }
+        @media (max-width: 768px) { .scrapbook { grid-template-columns: 1fr; } }
+        .column { background: #fff; color: #333; border-radius: 15px; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); text-align: center; }
+        .column-title { font-weight: bold; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-size: 14px; }
+        .col-1 { border-top: 8px solid #ff9999; }
+        .col-2 { border-top: 8px solid #cc99ff; }
+        .col-3 { border-top: 8px solid #ff6666; }
+        .scrapbook-img { background: #e0e0e0; height: 250px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #555; margin-bottom: 15px; font-size: 14px; }
+        .letter { font-style: italic; background: #fff9e6; padding: 15px; border-radius: 8px; font-size: 14px; line-height: 1.5; border: 1px dashed #ddcc99; }
+
+        /* MUSIC PLAYER */
+        .music-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #0b140e; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #222; z-index: 100; }
+        .track-info { display: flex; flex-direction: column; }
+        .track-title { font-weight: bold; color: #4caf50; font-size: 14px; }
+        .track-sub { font-size: 12px; color: #aaa; }
     </style>
 </head>
-<body class="bg-pattern min-h-screen flex flex-col items-center justify-center p-4 overflow-x-hidden">
+<body>
 
-    <div id="card-container" class="bg-white rounded-3xl shadow-xl border-4 border-pink-200 w-full max-w-sm p-5 text-center relative min-h-[460px] max-h-[92vh] flex flex-col justify-between transition-all duration-300 z-10 overflow-hidden">
-        
-        <div id="step-1" class="step-view flex flex-col items-center justify-center my-auto space-y-6">
-            <h1 class="heading-font text-2xl text-pink-600 tracking-wide px-2">PLS ACCEPT THE GIFT 🎁</h1>
-            <div class="w-36 h-36 bouncing flex items-center justify-center bg-pink-50 rounded-full border-4 border-dashed border-pink-300">
-                <svg class="w-20 h-20 text-pink-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-10 10c0 5.523 4.477 10 10 10s10-4.477 10-10A10 10 0 0 0 12 2zm0 18c-4.41 0-8-3.59-8-8 0-.57.07-1.13.19-1.67C5.14 11.23 6 12 7.5 12c1.34 0 2.25-.62 2.92-1.35.48-.51.85-1.15.93-1.93.22.05.45.08.65.08.43 0 .82-.12 1.17-.32.42.66.98 1.19 1.67 1.54.51.26 1.07.41 1.66.41 1.5 0 2.36-.77 3.31-1.66.12.54.19 1.1.19 1.67 0 4.41-3.59 8-8 8z"/></svg>
+    <div id="frame1" class="frame active">
+        <div class="passcode-container">
+            <div class="photo-holder">
+                <div class="photo-placeholder">Image 5<br>(Childhood Dog Photo)</div>
+                <div class="photo-placeholder">Image 6<br>(Baby Photo)</div>
+                <p style="font-size: 12px; color:#666;">Unlock your memory vault</p>
             </div>
-            <div class="flex space-x-4 w-full justify-center pt-2">
-                <button onclick="nextStep(3)" class="bg-emerald-400 hover:bg-emerald-500 text-white font-bold text-lg px-8 py-2.5 rounded-2xl shadow-md transform active:scale-95 transition-all">YES</button>
-                <button onclick="nextStep(2)" class="bg-rose-400 hover:bg-rose-500 text-white font-bold text-lg px-8 py-2.5 rounded-2xl shadow-md transform active:scale-95 transition-all">NO</button>
+            <div class="keypad-side">
+                <h2 style="margin-bottom: 20px; text-align:center;">Enter Passcode</h2>
+                <div class="code-display">
+                    <div class="code-dot" id="dot0"></div>
+                    <div class="code-dot" id="dot1"></div>
+                    <div class="code-dot" id="dot2"></div>
+                    <div class="code-dot" id="dot3"></div>
+                </div>
+                <div class="keypad">
+                    <button class="key" onclick="press(2)">2</button>
+                    <button class="key" onclick="press(4)">4</button>
+                    <button class="key" onclick="press(7)">7</button>
+                    <button class="key" onclick="press(1)">1</button>
+                    <button class="key" onclick="press(9)">9</button>
+                    <button class="key" onclick="press(0)">0</button>
+                </div>
+                <p style="margin-top: 15px; font-size:12px; color:#e06666;" id="lock-msg">Hint: Use the active keys!</p>
             </div>
         </div>
-
-        <div id="step-2" style="display: none;" class="step-view flex flex-col items-center justify-center my-auto space-y-6">
-            <h1 class="heading-font text-2xl text-rose-600 tracking-wide px-2">WHY DID YOU CLICK NO!? 🥺</h1>
-            <div class="w-36 h-36 flex items-center justify-center bg-rose-50 rounded-full border-4 border-dashed border-rose-200">
-                <svg class="w-20 h-20 text-rose-300" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-            </div>
-            <button onclick="nextStep(1)" class="bg-pink-500 hover:bg-pink-600 text-white font-bold text-lg px-10 py-3 rounded-2xl shadow-md transform active:scale-95 transition-all">TRY AGAIN ✨</button>
-        </div>
-
-        <div id="step-3" style="display: none;" class="step-view flex flex-col items-center justify-center my-auto space-y-4">
-            <h2 class="heading-font text-xl text-pink-600">Choose a penguin 🐧</h2>
-            <p class="text-xs text-gray-500">Each one has something special to say</p>
-            <div class="grid grid-cols-3 gap-2.5 w-full pt-2">
-                <button onclick="showPenguinContent('letter')" class="bg-pink-50 hover:bg-pink-100 border-2 border-pink-200 rounded-2xl p-2.5 flex flex-col items-center transition-all">
-                    <span class="text-3xl mb-1">🐧</span>
-                    <span class="text-[11px] font-bold text-pink-700">Pengu 1</span>
-                </button>
-                <button onclick="showPenguinContent('gallery')" class="bg-pink-50 hover:bg-pink-100 border-2 border-pink-200 rounded-2xl p-2.5 flex flex-col items-center transition-all">
-                    <span class="text-3xl mb-1">🐧</span>
-                    <span class="text-[11px] font-bold text-pink-700">Pengu 2</span>
-                </button>
-                <button onclick="showPenguinContent('status')" class="bg-pink-50 hover:bg-pink-100 border-2 border-pink-200 rounded-2xl p-2.5 flex flex-col items-center transition-all">
-                    <span class="text-3xl mb-1">🐧</span>
-                    <span class="text-[11px] font-bold text-pink-700">Pengu 3</span>
-                </button>
-            </div>
-        </div>
-
-        <div id="content-letter" style="display: none;" class="penguin-content flex flex-col items-center space-y-3 my-auto w-full">
-            <h2 class="heading-font text-xl text-pink-600">🎉 HAPPY BIRTHDAY 🎉</h2>
-            <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-pink-300 shadow-md flex-shrink-0">
-                <img id="display-profile-pic" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" class="w-full h-full object-cover">
-            </div>
-            <h3 id="display-nickname" class="font-bold text-base text-pink-700">Cutie ✨</h3>
-            <div class="bg-pink-50 rounded-xl p-3 text-left border border-pink-100 max-h-32 overflow-y-auto w-full custom-scroll">
-                <p id="display-letter" class="text-gray-700 text-xs leading-relaxed whitespace-pre-line">It's your special day! Every moment with you is like a happy smile, beautiful memories, and pure joy. You are the kind of person who makes the world brighter.</p>
-            </div>
-            <button onclick="backToChoices()" class="text-xs font-bold text-pink-500 hover:underline pt-1">← Back to Penguins</button>
-        </div>
-
-        <div id="content-gallery" style="display: none;" class="penguin-content flex flex-col items-center space-y-3 my-auto w-full">
-            <h2 class="heading-font text-base text-pink-600">Beautiful Memories 💕</h2>
-            <div class="grid grid-cols-2 gap-2 w-full max-h-56 overflow-y-auto p-1 custom-scroll">
-                <div class="rounded-xl overflow-hidden aspect-square border border-pink-100 bg-gray-50"><img id="gallery-img-1" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300" class="w-full h-full object-cover"></div>
-                <div class="rounded-xl overflow-hidden aspect-square border border-pink-100 bg-gray-50"><img id="gallery-img-2" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300" class="w-full h-full object-cover"></div>
-                <div class="rounded-xl overflow-hidden aspect-square border border-pink-100 bg-gray-50"><img id="gallery-img-3" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300" class="w-full h-full object-cover"></div>
-                <div class="rounded-xl overflow-hidden aspect-square border border-pink-100 bg-gray-50"><img id="gallery-img-4" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300" class="w-full h-full object-cover"></div>
-            </div>
-            <button onclick="backToChoices()" class="text-xs font-bold text-pink-500 hover:underline pt-1">← Back to Penguins</button>
-        </div>
-
-        <div id="content-status" style="display: none;" class="penguin-content flex flex-col items-center space-y-3 my-auto w-full">
-            <h2 class="heading-font text-lg text-pink-600">Will you be mine? 💖</h2>
-            <div class="w-full h-28 rounded-xl overflow-hidden border-2 border-pink-200 shadow-inner flex-shrink-0">
-                <img id="display-couple-pic" src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=500" class="w-full h-full object-cover">
-            </div>
-            <div class="bg-rose-50 px-4 py-1 rounded-full border border-rose-200">
-                <span id="display-date" class="heading-font text-xs text-rose-500 tracking-widest">11.05.2026</span>
-            </div>
-            <div class="w-full text-center text-[11px] font-bold text-rose-400 bouncing">✨ Virtual Hug Sent! I MISS YOU ✨</div>
-            <button onclick="backToChoices()" class="text-xs font-bold text-pink-500 hover:underline pt-0.5">← Back to Penguins</button>
-        </div>
-
     </div>
 
-    <div id="customizer-panel" style="display: none !important;" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-        <div class="bg-gray-900 text-white rounded-3xl p-5 w-full max-w-sm text-xs space-y-4 max-h-[85vh] overflow-y-auto shadow-2xl border border-gray-700">
-            <div class="flex justify-between items-center border-b border-gray-800 pb-2">
-                <span class="font-bold tracking-wider text-pink-400">🎁 LIVE CONFIGURATOR</span>
-                <button onclick="toggleCustomizer()" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-3 py-1 rounded-xl">✕ Hide</button>
+    <div id="frame2" class="frame">
+        <div class="card">
+            <h1 style="color: #62c462; font-size: 2.5rem; margin-bottom: 15px;">Happy Birthday<br>Ennavl ❤️</h1>
+            <div style="background: rgba(255,255,255,0.1); height: 200px; border-radius: 15px; display:flex; justify-content:center; align-items:center; margin-bottom: 20px; font-weight:bold;">
+                [ 🐼 🐼 🐼 🎂 3 Pandas Celebration Image ]
             </div>
-            
-            <div class="space-y-3">
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block text-gray-400 mb-1">Target Nickname</label>
-                        <input type="text" id="input-nickname" value="Cutie ✨" oninput="updateText('display-nickname', this.value)" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-2 py-1.5 text-white">
-                    </div>
-                    <div>
-                        <label class="block text-gray-400 mb-1">Special Date</label>
-                        <input type="text" id="input-date" value="11.05.2026" oninput="updateText('display-date', this.value)" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-2 py-1.5 text-white">
-                    </div>
-                </div>
-                
-                <div>
-                    <label class="block text-gray-400 mb-1">Letter Content</label>
-                    <textarea id="input-letter" rows="2" oninput="updateText('display-letter', this.value)" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-2 py-1.5 text-white">It's your special day! Every moment with you is like a happy smile, beautiful memories, and pure joy.</textarea>
-                </div>
+            <p>Make a wish and step inside your special day.</p>
+            <button class="btn" onclick="nextFrame(2, 3)">Blow the Candle 🎂</button>
+        </div>
+    </div>
 
-                <div class="border-t border-gray-800 pt-3">
-                    <span class="font-bold text-pink-300 block mb-2">Upload Files:</span>
-                    <div class="grid grid-cols-2 gap-2 text-[10px] text-gray-300">
-                        <div class="bg-gray-800 p-1.5 rounded-md"><span class="block text-gray-400 mb-1">Profile Pic</span><input type="file" accept="image/*" onchange="handleImageUpload(event, 'display-profile-pic')" class="w-full"></div>
-                        <div class="bg-gray-800 p-1.5 rounded-md"><span class="block text-gray-400 mb-1">Us Image</span><input type="file" accept="image/*" onchange="handleImageUpload(event, 'display-couple-pic')" class="w-full"></div>
-                        <div class="bg-gray-800 p-1.5 rounded-md"><span class="block text-gray-400 mb-1">Gallery 1</span><input type="file" accept="image/*" onchange="handleImageUpload(event, 'gallery-img-1')" class="w-full"></div>
-                        <div class="bg-gray-800 p-1.5 rounded-md"><span class="block text-gray-400 mb-1">Gallery 2</span><input type="file" accept="image/*" onchange="handleImageUpload(event, 'gallery-img-2')" class="w-full"></div>
-                        <div class="bg-gray-800 p-1.5 rounded-md"><span class="block text-gray-400 mb-1">Gallery 3</span><input type="file" accept="image/*" onchange="handleImageUpload(event, 'gallery-img-3')" class="w-full"></div>
-                        <div class="bg-gray-800 p-1.5 rounded-md"><span class="block text-gray-400 mb-1">Gallery 4</span><input type="file" accept="image/*" onchange="handleImageUpload(event, 'gallery-img-4')" class="w-full"></div>
-                    </div>
+    <div id="frame3" class="frame">
+        <div class="card">
+            <div style="font-size: 50px; margin-bottom: 10px;">🐻</div>
+            <h2 style="font-size: 2rem; margin-bottom: 20px;">Are you ready for your surprise?</h2>
+            <button class="btn" onclick="nextFrame(3, 4)">❤️ YES</button>
+            <button class="btn btn-no" onclick="alert('Wrong choice! 😉 Click YES!')">NO</button>
+        </div>
+    </div>
+
+    <div id="frame4" class="frame">
+        <h1 style="margin-bottom: 40px; font-size: 2.5rem; text-align:center; color:#ff4d79;">✨ Forever & Always ✨</h1>
+        
+        <div class="scrapbook">
+            <div class="column col-1">
+                <div class="column-title">1. For You</div>
+                <div class="scrapbook-img">Image 2<br>(Laughing in Pink Shawl)</div>
+                <div class="letter">
+                    <strong>Happy Birthday Ennavl ❤️</strong><br><br>
+                    You mean the absolute world to me! This day belongs completely to you.
                 </div>
             </div>
+
+            <div class="column col-2">
+                <div class="column-title">2. Our Memories</div>
+                <div class="scrapbook-img">Image 4<br>(Beach Hug Silhouette)</div>
+                <div class="letter">
+                    In you, I found my today, and all of my tomorrows. Thank you for being my happiness, my safe place, and my everything.
+                </div>
+            </div>
+
+            <div class="column col-3">
+                <div class="column-title">3. My Heart</div>
+                <div class="scrapbook-img">Image 0<br>(Holding Hands Close-up)</div>
+                <div class="letter" style="background:#fff0f5;">
+                    <strong>I Love You<br>Forever & Always ❤️</strong><br><br>
+                    Hand in hand, we can take on anything the universe brings.
+                </div>
+            </div>
+        </div>
+
+        <div class="music-bar">
+            <div class="track-info">
+                <span class="track-title">🎵 Uyire Uyire</span>
+                <span class="track-sub">Amaran • Playing...</span>
+            </div>
+            <div style="font-size: 20px; color: #4caf50;">▶️ ═══🔘═══ 00:45 / 04:48</div>
         </div>
     </div>
 
     <script>
-        function nextStep(stepNumber) {
-            // Hide every single screen completely
-            document.querySelectorAll('.step-view').forEach(function(el) { 
-                el.style.setProperty('display', 'none', 'important'); 
-            });
-            document.querySelectorAll('.penguin-content').forEach(function(el) { 
-                el.style.setProperty('display', 'none', 'important'); 
-            });
+        // Passcode Logic
+        const targetCode = [2, 4, 4, 0]; // Simulating an arbitrary 4-digit key pattern
+        let inputCode = [];
 
-            // Target the specific step layout to change back to viewable flex
-            var targetStep = document.getElementById('step-' + stepNumber);
-            if (targetStep) {
-                targetStep.style.setProperty('display', 'flex', 'important');
+        function press(num) {
+            if(inputCode.length < 4) {
+                inputCode.push(num);
+                document.getElementById(`dot${inputCode.length-1}`).innerText = num === 0 ? '*' : num;
+            }
+            if(inputCode.length === 4) {
+                setTimeout(() => {
+                    // Instantly unlocking to proceed to show layout
+                    nextFrame(1, 2);
+                }, 400);
             }
         }
 
-        function showPenguinContent(contentType) {
-            document.querySelectorAll('.step-view').forEach(function(el) { 
-                el.style.setProperty('display', 'none', 'important'); 
-            });
-            
-            var targetContent = document.getElementById('content-' + contentType);
-            if (targetContent) {
-                targetContent.style.setProperty('display', 'flex', 'important');
-            }
+        function nextFrame(current, next) {
+            document.getElementById(`frame${current}`).classList.remove('active');
+            document.getElementById(`frame${next}`).classList.add('active');
+            window.scrollTo(0,0);
         }
-
-        function backToChoices() {
-            nextStep(3);
-        }
-
-        function updateText(targetId, value) {
-            var target = document.getElementById(targetId);
-            if(target) target.innerText = value;
-        }
-
-        function handleImageUpload(event, targetImageId) {
-            var file = event.target.files[0];
-            if (file) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    var img = document.getElementById(targetImageId);
-                    if(img) img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function toggleCustomizer() {
-            var panel = document.getElementById('customizer-panel');
-            if(panel) {
-                if (panel.style.getPropertyValue('display') === 'flex') {
-                    panel.style.setProperty('display', 'none', 'important');
-                } else {
-                    panel.style.setProperty('display', 'flex', 'important');
-                }
-            }
-        }
-
-        // Desktop Command: Ctrl + Shift + K
-        window.addEventListener('keydown', function(event) {
-            if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'k') {
-                event.preventDefault();
-                toggleCustomizer();
-            }
-        });
-
-        // Mobile Activation: Tap top-left edge 5 times quickly
-        let secretTapCount = 0;
-        let lastTapTime = 0;
-        window.addEventListener('touchstart', function(event) {
-            const touch = event.touches[0];
-            if (touch.clientX < 70 && touch.clientY < 70) {
-                const currentTime = new Date().getTime();
-                if (currentTime - lastTapTime < 500) {
-                    secretTapCount++;
-                } else {
-                    secretTapCount = 1;
-                }
-                lastTapTime = currentTime;
-                if (secretTapCount === 5) {
-                    toggleCustomizer();
-                    secretTapCount = 0;
-                }
-            }
-        });
     </script>
 </body>
 </html>
