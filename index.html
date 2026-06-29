@@ -32,7 +32,8 @@
         #frame1 { background-color: var(--bg-blue); color: #333; }
         .passcode-container { display: flex; background: #fff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-width: 700px; width: 100%; gap: 30px; }
         .photo-holder { flex: 1; background: #f9f9f9; padding: 15px; border-radius: 10px; border: 1px solid #ddd; text-align: center; }
-        .photo-placeholder { background: #e0e0e0; height: 200px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; color: #666; }
+        .photo-placeholder { background: #e0e0e0; height: 200px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; color: #666; overflow: hidden; position: relative; }
+        .photo-placeholder img { width: 100%; height: auto; display: block; border-radius: 8px; }
         .keypad-side { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .code-display { display: flex; gap: 10px; margin-bottom: 20px; }
         .code-dot { width: 40px; height: 40px; border: 2px solid #333; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; }
