@@ -538,6 +538,17 @@
             50% { transform: scale(1.01); }
         }
 
+        .frame-view {
+            display: none !important;
+        }
+
+        .frame-view.active-view {
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
         .image-wrapper {
             position: relative;
             width: 100%;
