@@ -101,17 +101,14 @@
             100% { opacity: 0; transform: scale(0.8) translateY(-25px); }
         }
 
-        /* Hide all frames by default */
         .frame-view {
             display: none;
             width: 100%;
-            height: 100%;
+            flex-grow: 1;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            justify-content: space-between;
+            z-index: 5;
         }
-        
-        /* Only the active one is shown */
         .frame-view.active-view {
             display: flex;
         }
@@ -541,21 +538,10 @@
             50% { transform: scale(1.01); }
         }
 
-        #frame3View {
-            display: none; /* Default hidden */
-            width: 100%;
-            flex-grow: 1;
-            flex-direction: column;
-            justify-content: center; /* Vertically centers the image */
-            align-items: center;     /* Horizontally centers the image */
-        }
-        
-        /* Ensure the wrapper respects the centering */
         .image-wrapper {
             position: relative;
             width: 100%;
-            max-width: 480px; /* Maintains your preferred width */
-            margin: 0 auto;   /* Extra insurance for horizontal centering */
+            max-width: 480px;
         }
         
         .image-wrapper img { width: 100%; height: auto; }
@@ -639,16 +625,18 @@
             </div>
         </div>
 
-        <div id="cakeView" class="frame-view"> 
-            <div class="interactive-container" onclick="switchToFrame('frame3View')">
-                <img src="Frame2.jpeg" alt="Blow the candle">
-            </div>
+        <div id="cakeView" class="frame-view">
+            <div class="cake-frame-container">
+                <div class="cake-image-box clickable-cake" onclick="proceedToFrame3()">
+                    <img src="Frame2.jpeg" alt="Click to Blow the Candle">
+                </div>
+                </div>
         </div>
 
         <div id="frame3View" class="frame-view">
             <div class="image-wrapper">
                 <img src="Frame3.jpeg" alt="Surprise Choice">
-                <div class="hotspot-yes" onclick="switchToFrame('dashboardView')"></div>
+                <div class="hotspot-yes" onclick="showDashboard()"></div>
                 <div class="hotspot-no" onclick="showAngryPanda()"></div>
             </div>
         </div>
@@ -783,20 +771,8 @@
         }
 
         function proceedToFrame3() {
-            console.log("Attempting to switch to Frame 3..."); // Debugging check
-    
-            // 1. Remove active class from ALL views first
-            document.querySelectorAll('.frame-view').forEach(view => {
-                view.classList.remove('active-view');
-            });
-            
-            // 2. Add active class to Frame 3
-            const f3 = document.getElementById('frame3View');
-            if (f3) {
-                f3.classList.add('active-view');
-            } else {
-                console.error("Frame 3 element not found!");
-            }
+            document.getElementById('cakeView').classList.remove('active-view');
+            document.getElementById('frame3View').classList.add('active-view');
         }
 
         function showDashboard() {
@@ -805,39 +781,21 @@
         }
         
         function showAngryPanda() {
-            // 1. Hide Frame 3
+            // Reuse the existing errorPandaView logic or create a specific one
             document.getElementById('frame3View').classList.remove('active-view');
-            
-            // 2. Show the Error Page
             const errorView = document.getElementById('errorPandaView');
             errorView.classList.add('active-view');
             
-            // 3. Customize the content dynamically
+            // Update the error message for this specific case
             errorView.querySelector('.error-message-heading').innerText = "How dare you?!";
             errorView.querySelector('.error-message-desc').innerText = "You have to say yes to your birthday surprise! Try again.";
             
-            // 4. Reset the "Try Again" button to return to Frame 3 instead of the lockscreen
-            const retryBtn = errorView.querySelector('.action-retry-btn');
-            retryBtn.onclick = function() {
+            // Reset the retry button to go back to Frame 3 instead of Lockscreen
+            const btn = errorView.querySelector('.action-retry-btn');
+            btn.onclick = function() {
                 errorView.classList.remove('active-view');
                 document.getElementById('frame3View').classList.add('active-view');
             };
-        }
-
-        function switchToFrame(frameId) {
-            // 1. Find all frame views
-            const allFrames = document.querySelectorAll('.frame-view');
-            
-            // 2. Hide everything
-            allFrames.forEach(frame => {
-                frame.classList.remove('active-view');
-            });
-            
-            // 3. Show only the requested one
-            const target = document.getElementById(frameId);
-            if (target) {
-                target.classList.add('active-view');
-            }
         }
 
         function returnToKeypad() {
