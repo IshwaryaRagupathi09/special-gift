@@ -86,7 +86,7 @@
             background-size: 24px 24px;
         }
 
-        /* --- FRAME 1: INTRO (Please Accept Gift) --- */
+        /* --- VIDEO FLOW: PLS ACCEPT THE GIFT --- */
         #frame-gift-intro {
             background-color: var(--soft-cream);
             color: #433322;
@@ -98,6 +98,7 @@
             font-size: 2rem;
             margin-bottom: 40px;
             text-align: center;
+            font-weight: 600;
         }
         .penguin-main-box {
             width: 220px;
@@ -128,10 +129,10 @@
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(0,0,0,0.15);
         }
-        .btn-yes-gift { background-color: #5da46b; color: white; }
-        .btn-no-gift { background-color: #d95366; color: white; }
+        .btn-yes-gift { background-color: #e63946; color: white; border: 3px solid #ffb3c1; }
+        .btn-no-gift { background-color: #e63946; color: white; border: 3px solid #ffb3c1; }
 
-        /* --- INTRO ERROR SUBFRAME (Why did you click no!) --- */
+        /* INTRO COMPONENT ERROR FALLBACK */
         #frame-gift-error {
             background-color: var(--soft-cream);
             color: #433322;
@@ -140,19 +141,60 @@
             z-index: 201;
         }
         .btn-retry {
-            background-color: #d95366;
+            background-color: #e63946;
             color: white;
-            padding: 12px 40px;
+            padding: 12px 50px;
             font-size: 1.2rem;
             font-weight: 600;
             border-radius: 30px;
-            border: 2px solid #fff;
+            border: 3px solid #ffb3c1;
             cursor: pointer;
             margin-top: 30px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        /* --- FRAME 2: LOCK SCREEN PIN ENTER --- */
+        /* --- VIDEO FLOW: CHOOSE A PENGUIN --- */
+        #frame-choose-penguin {
+            background-color: var(--soft-cream);
+            color: #433322;
+            justify-content: center;
+            height: 100%;
+            z-index: 190;
+            text-align: center;
+        }
+        #frame-choose-penguin h2 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        #frame-choose-penguin p {
+            font-size: 1.1rem;
+            color: #7d664d;
+            margin-bottom: 40px;
+        }
+        .penguin-choices-row {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+        }
+        .penguin-choice-card {
+            background: white;
+            border: 2px solid #ebd9c5;
+            border-radius: 16px;
+            width: 110px;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            font-size: 0.75rem;
+            color: #a68e74;
+            padding: 5px;
+            text-align: center;
+        }
+
+        /* --- FRAME 2: SECURE PASSWORD LOCK VIEW --- */
         #frame-lock-screen {
             background: linear-gradient(180deg, #051408 0%, #020904 100%);
             justify-content: space-between;
@@ -188,7 +230,7 @@
         /* Layout Grid to display decorative side photos next to Keypad */
         .keypad-layout-container {
             display: grid;
-            grid-template-columns: 55px 1fr 55px;
+            grid-template-columns: 60px 1fr 60px;
             gap: 10px;
             width: 100%;
             align-items: center;
@@ -203,7 +245,7 @@
             align-items: center;
             justify-content: center;
             font-size: 0.65rem;
-            color: #557c5d;
+            color: #638c6d;
             text-align: center;
             padding: 4px;
         }
@@ -284,523 +326,4 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px dashed rgba(255,255,255,0.1);
-            margin-bottom: 30px;
-            cursor: pointer;
-        }
-        .blow-instruction {
-            font-family: 'Caveat', cursive;
-            font-size: 1.8rem;
-            color: #a3c4ab;
-        }
-
-        /* --- FRAME 4: ASK FOR SURPRISE (Bear Canvas) --- */
-        #frame-ask-surprise {
-            justify-content: center;
-        }
-        .speech-cloud-bubble {
-            background: #fff8ee;
-            color: #2b1f14;
-            padding: 20px 30px;
-            border-radius: 40px;
-            font-size: 1.7rem;
-            font-family: 'Caveat', cursive;
-            font-weight: bold;
-            text-align: center;
-            position: relative;
-            margin-bottom: 35px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            border: 2px solid #ebd3b5;
-        }
-        .speech-cloud-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 15px 15px 0;
-            border-style: solid;
-            border-color: #fff8ee transparent;
-        }
-        .bear-canvas-frame {
-            width: 190px;
-            height: 190px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 40px;
-            border: 2px dashed rgba(255,255,255,0.1);
-        }
-        .ask-response-buttons {
-            display: flex;
-            gap: 20px;
-            width: 100%;
-            max-width: 300px;
-        }
-        .btn-choice {
-            flex: 1;
-            padding: 12px 0;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 30px;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-choice-yes {
-            background: linear-gradient(180deg, #275e32 0%, #153a1d 100%);
-            color: #fff;
-            border: 2px solid #3c874b;
-        }
-        .btn-choice-no {
-            background: linear-gradient(180deg, #b83244 0%, #7a1926 100%);
-            color: #fff;
-            border: 2px solid #d4485b;
-        }
-
-        /* --- BEAR ANGRY/SAD ERROR PAGE FLOW --- */
-        #frame-bear-angry {
-            background-color: #120406;
-            justify-content: center;
-        }
-        .angry-message-card {
-            background: #ffeef0;
-            color: #5c1e26;
-            border: 2px solid #f7cbd1;
-            padding: 20px;
-            border-radius: 20px;
-            font-family: 'Caveat', cursive;
-            font-size: 1.6rem;
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        /* --- FRAME 5: SURPRISES DASHBOARD GRID --- */
-        #frame-surprises-dashboard {
-            padding: 16px;
-            background: #041007;
-        }
-        .dashboard-header {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.8rem;
-            color: var(--accent-gold);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            width: 100%;
-        }
-        .dashboard-panel-column {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--grid-border-green);
-            border-radius: 12px;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            height: 590px;
-        }
-        .panel-ribbon-label {
-            width: 100%;
-            padding: 5px 0;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-align: center;
-            border-radius: 6px;
-            margin-bottom: 8px;
-        }
-        .ribbon-pink { background-color: var(--panel-pink); color: #70262f; }
-        .ribbon-purple { background-color: var(--panel-purple); color: #422a6e; }
-        .ribbon-red { background-color: var(--panel-red); color: #822834; }
-
-        .panel-photo-frame {
-            width: 100%;
-            height: 170px;
-            background: #142819;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            color: #638c6d;
-            text-align: center;
-        }
-        .panel-letter-sheet {
-            background-color: #fff9ef;
-            color: #2b2218;
-            width: 100%;
-            border-radius: 6px;
-            margin-top: 8px;
-            padding: 8px;
-            font-family: 'Caveat', cursive;
-            font-size: 0.95rem;
-            line-height: 1.2;
-            flex-grow: 1;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .dashboard-motto-footer {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.2rem;
-            color: var(--accent-gold);
-            margin-top: 20px;
-            text-align: center;
-            width: 100%;
-        }
-
-        /* --- DETAILED SLOTS REVEAL SUBVIEWS --- */
-        .subview-modal-screen {
-            background-color: var(--soft-cream);
-            color: #33271b;
-        }
-        .subview-header {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 2rem;
-            color: #1c3d24;
-            margin-bottom: 20px;
-        }
-        .subview-large-frame {
-            width: 100%;
-            height: 360px;
-            background: #eadaaf;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px dashed #b5a272;
-            margin-bottom: 20px;
-            color: #615331;
-        }
-        .subview-text-long {
-            font-family: 'Caveat', cursive;
-            font-size: 1.3rem;
-            text-align: center;
-        }
-
-        /* --- FIXED FOOTER MUSIC BAR CONTROLLER --- */
-        .music-footer-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 90px;
-            background: #020a04;
-            border-top: 1px solid #14331b;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            z-index: 100;
-        }
-        .music-identity-side {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .vinyl-disc-widget {
-            width: 46px;
-            height: 46px;
-            background: radial-gradient(circle, #222 25%, #050505 26%, #111 70%, #444 100%);
-            border-radius: 50%;
-            border: 2px solid #285e33;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: rotateVinyl 4s linear infinite;
-        }
-        .vinyl-core-center {
-            width: 12px;
-            height: 12px;
-            background-color: var(--text-glow-green);
-            border-radius: 50%;
-        }
-        @keyframes rotateVinyl {
-            100% { transform: rotate(360deg); }
-        }
-        .track-label-title { font-size: 0.95rem; font-weight: 600; color: #ffffff; }
-        .track-label-status { font-size: 0.75rem; color: #5ea86e; margin-top: 2px; }
-        .music-controls-side {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            color: #aae0b8;
-            font-size: 0.85rem;
-        }
-        .play-pause-toggle {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            border: 2px solid #5ea86e;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="app-container">
-
-        <div id="frame-gift-intro" class="screen active">
-            <h2>PLS ACCEPT THE GIFT 🐧❤️</h2>
-            <div class="penguin-main-box">
-                <span style="color:#a68e74; font-size:0.9rem; text-align:center; padding:10px;">[Penguin Heart Animation Image Frame]</span>
-            </div>
-            <div class="intro-btn-group">
-                <button class="btn-action btn-yes-gift" onclick="showScreen('frame-lock-screen')">YES</button>
-                <button class="btn-action btn-no-gift" onclick="showScreen('frame-gift-error')">NO</button>
-            </div>
-        </div>
-
-        <div id="frame-gift-error" class="screen">
-            <h2 style="margin-top:40px;">WHY DID YOU CLICK NO! 🐧💔</h2>
-            <div class="penguin-main-box" style="margin-top:30px;">
-                <span style="color:#a68e74; font-size:0.9rem;">[Sad Cry Penguin Image Frame]</span>
-            </div>
-            <button class="btn-retry" onclick="showScreen('frame-gift-intro')">TRY AGAIN</button>
-        </div>
-
-        <div id="frame-lock-screen" class="screen">
-            <div class="bg-hearts"></div>
-            
-            <div style="text-align: center; width: 100%; z-index: 5;">
-                <h1 class="welcome-title">Welcome</h1>
-                <p class="lock-subtitle">Enter the password to unlock your surprise</p>
-                
-                <div style="display: flex; justify-content: center; width:100%;">
-                    <div class="lock-heart-dots" id="passcode-dots-box">
-                        <span class="heart-dot">♥</span>
-                        <span class="heart-dot">♥</span>
-                        <span class="heart-dot">♥</span>
-                        <span class="heart-dot">♥</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="keypad-layout-container">
-                <div class="side-photo-decor-frame">[Side Decor Image Slot Left]</div>
-                
-                <div class="heart-keypad">
-                    <div class="heart-key" onclick="pressKeypadDigit('1')">
-                        <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
-                        <span>1</span>
-                    </div>
-                    <div class="heart-key" onclick="pressKeypadDigit('2')">
-                        <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
-                        <span>2</span>
-                    </div>
-                    <div class="heart-key" onclick="pressKeypadDigit('3')">
-                        <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
-                        <span>3</span>
-                    </div>
-                    <div class="heart-key" onclick="pressKeypadDigit('4')">
-                        <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
-                        <span>4</span>
-                    </div>
-                    <div class="heart-key" onclick="pressKeypadDigit('5')">
-                        <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
-                        <span>5</span>
-                    </div>
-                    <div class="heart-key" onclick="pressKeypadDigit('6')">
-                        <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
-                        <span>6</span>
-                    </div>
-                    <div class="heart-key" onclick="pressKeypadDigit('7')">
-                        <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
-                        <span>7</span>
-                    </div>
-                    <div class="heart-key" onclick="pressKeypadDigit('8')">
-                        <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
-                        <span>8</span>
-                    </div>
-                    <div class="heart-key" onclick="pressKeypadDigit('9')">
-                        <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
-                        <span>9</span>
-                    </div>
-                    <div class="heart-key" style="opacity:0; pointer-events:none;"></div>
-                    <div class="heart-key" onclick="pressKeypadDigit('0')">
-                        <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
-                        <span>0</span>
-                    </div>
-                    <div class="heart-key" onclick="clearKeypadDigit()">
-                        <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
-                        <span style="font-size:1.1rem;">⌫</span>
-                    </div>
-                </div>
-
-                <div class="side-photo-decor-frame">[Side Decor Image Slot Right]</div>
-            </div>
-
-            <button class="enter-bar-btn" onclick="validatePasscode()">♥ ENTER ♥</button>
-        </div>
-
-        <div id="frame-panda-cake" class="screen">
-            <div class="bg-hearts"></div>
-            <h2 class="bday-banner-text">Happy<br>Birthday</h2>
-            <h3 class="bday-subname">Ennavl</h3>
-            
-            <div class="cake-container-frame" onclick="showScreen('frame-ask-surprise')">
-                <span style="color:#7ca685; font-size: 0.95rem; text-align: center; padding: 20px;">
-                    [Three Pandas & Cake Graphic Frame Slot - Click to Blow Candle]
-                </span>
-            </div>
-            
-            <p class="blow-instruction">♥ Blow the candle ♥</p>
-        </div>
-
-        <div id="frame-ask-surprise" class="screen">
-            <div class="speech-cloud-bubble">
-                Are you ready for surprise?
-            </div>
-            
-            <div class="bear-canvas-frame">
-                <span style="color:#7ca685; font-size:0.85rem;">[Happy Cute Bear Graphic Frame]</span>
-            </div>
-
-            <div class="ask-response-buttons">
-                <button class="btn-choice btn-choice-yes" onclick="showScreen('frame-surprises-dashboard')">♥ YES</button>
-                <button class="btn-choice btn-choice-no" onclick="showScreen('frame-bear-angry')">♥ NO</button>
-            </div>
-        </div>
-
-        <div id="frame-bear-angry" class="screen">
-            <div class="angry-message-card">
-                WHY DID YOU SAY NO! Click YES to unlock your gift immediately! 🐻💢
-            </div>
-            <div class="bear-canvas-frame" style="border-color:#b83244;">
-                <span style="color:#b83244; font-size:0.85rem;">[Angry/Sad Bear Graphic Frame]</span>
-            </div>
-            <div class="ask-response-buttons" style="max-width:180px;">
-                <button class="btn-choice btn-choice-yes" onclick="showScreen('frame-surprises-dashboard')">♥ YES 💚</button>
-            </div>
-        </div>
-
-        <div id="frame-surprises-dashboard" class="screen">
-            <h2 class="dashboard-header">♥ Your 3 Surprises ♥</h2>
-            
-            <div class="dashboard-grid">
-                <div class="dashboard-panel-column" onclick="showScreen('subview-card-1')">
-                    <div class="panel-ribbon-label ribbon-pink">1. For You</div>
-                    <div class="panel-photo-frame">[Couple Photo Frame 1]</div>
-                    <div class="panel-letter-sheet">
-                        <b style="font-size:1rem; color:#70262f; display:block; margin-bottom:4px;">Happy Birthday Ennavl ♥</b>
-                        You mean the world to me!
-                    </div>
-                </div>
-
-                <div class="dashboard-panel-column" onclick="showScreen('subview-card-2')">
-                    <div class="panel-ribbon-label ribbon-purple">2. Our Memories</div>
-                    <div class="panel-photo-frame">[Couple Photo Frame 2]</div>
-                    <div class="panel-letter-sheet">
-                        In you, I found my today and all of my tomorrow... thankyou for being my happiness 🧭
-                    </div>
-                </div>
-
-                <div class="dashboard-panel-column" onclick="showScreen('subview-card-3')">
-                    <div class="panel-ribbon-label ribbon-red">3. My Heart</div>
-                    <div class="panel-photo-frame">[Heart Hand Picture Frame]</div>
-                    <div class="panel-letter-sheet">
-                        <div style="text-align:center; font-weight:bold; color:#822834; margin-top:15px;">I Love You Forever & Always ♥</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dashboard-motto-footer">♥ Forever & Always ♥</div>
-        </div>
-
-        <div id="subview-card-1" class="screen subview-modal-screen">
-            <h2 class="subview-header">For You 🌸</h2>
-            <div class="subview-large-frame">[Large Profile Photo Slot 1]</div>
-            <p class="subview-text-long">"Every single conversation with you brings a huge smile to my face. You are my safe place and ultimate comfort."</p>
-            <button class="subview-back-btn" style="margin-top:40px;" onclick="showScreen('frame-surprises-dashboard')">Return</button>
-        </div>
-
-        <div id="subview-card-2" class="screen subview-modal-screen">
-            <h2 class="subview-header">Our Memories 📸</h2>
-            <div class="subview-large-frame">[Large Profile Photo Slot 2]</div>
-            <p class="subview-text-long">"Thank you for being my constant, my happiness, and my absolute everything through every season."</p>
-            <button class="subview-back-btn" style="margin-top:40px;" onclick="showScreen('frame-surprises-dashboard')">Return</button>
-        </div>
-
-        <div id="subview-card-3" class="screen subview-modal-screen">
-            <h2 class="subview-header">My Whole Heart ❤️</h2>
-            <div class="subview-large-frame">[Large Profile Photo Slot 3]</div>
-            <p class="subview-text-long">"You are the finest, loveliest, and most beautiful soul I have ever known. My heart belongs completely to you."</p>
-            <button class="subview-back-btn" style="margin-top:40px;" onclick="showScreen('frame-surprises-dashboard')">Return</button>
-        </div>
-
-        <div class="music-footer-bar">
-            <div class="music-identity-side">
-                <div class="vinyl-disc-widget">
-                    <div class="vinyl-core-center"></div>
-                </div>
-                <div>
-                    <p class="track-label-title">Uyire Uyire - Amaran</p>
-                    <p class="track-label-status">Playing...</p>
-                </div>
-            </div>
-            <div class="music-controls-side">
-                <span>⏮</span>
-                <div class="play-pause-toggle">⏸</div>
-                <span>⏭</span>
-                <span style="font-size:0.75rem; color:#6ca67b;">00:45 / 04:48</span>
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-        // Set standard unlock passcode (Change to custom value if wanted)
-        const PASSCODE_TARGET = "1234";
-        let typedCodeBuffer = "";
-
-        // Screen routing engine
-        function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(view => {
-                view.classList.remove('active');
-            });
-            document.getElementById(screenId).classList.add('active');
-        }
-
-        // Lockscreen Keypad logic
-        function pressKeypadDigit(digit) {
-            if (typedCodeBuffer.length < 4) {
-                typedCodeBuffer += digit;
-                renderPasscodeDots();
-            }
-        }
-
-        function clearKeypadDigit() {
-            typedCodeBuffer = typedCodeBuffer.slice(0, -1);
-            renderPasscodeDots();
-        }
-
-        function renderPasscodeDots() {
-            const rowDots = document.querySelectorAll('#passcode-dots-box .heart-dot');
-            rowDots.forEach((dot, index) => {
-                if (index < typedCodeBuffer.length) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-        }
-
-        function validatePasscode() {
-            if (typedCodeBuffer === PASSCODE_TARGET) {
-                showScreen('frame-panda-cake');
-            } else {
-                alert("Incorrect PIN code! Hint: Use code 1234 💚");
-                typedCodeBuffer = "";
-                renderPasscodeDots();
-            }
-        }
-    </script>
-</body>
-</html>
+            border: 1px dashed rgba
