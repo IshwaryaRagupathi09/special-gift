@@ -3,186 +3,806 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Surprise for Ennavl</title>
+    <title>Happy Birthday Ennavl 💚</title>
+    <!-- Google Fonts for romantic, cute, and handwritten styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Great+Vibes&family=Fredoka:wght@400;600&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-blue: #7fa9d8;
-            --bg-dark-green: #0a2f1d;
-            --bg-light-green: #14422b;
-            --love-pink: #ff4d79;
+            --bg-dark-green: #041408;
+            --grid-border-green: #1f4a27;
+            --heart-green: #2a6f39;
+            --text-glow-green: #79f795;
+            --accent-gold: #e2c067;
+            --soft-cream: #fbf6ee;
+            --panel-pink: #f7d1d5;
+            --panel-purple: #e0d1f7;
+            --panel-red: #f7cbd1;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
-        body { background-color: #111; color: #fff; overflow-x: hidden; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
 
-        .frame {
-            display: none;
-            min-height: 100vh;
-            width: 100%;
+        body {
+            background-color: #0c0d0e;
+            color: #ffffff;
+            display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            position: relative;
-            padding: 20px;
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: 'Fredoka', sans-serif;
         }
 
-        .active { display: flex; }
+        /* Standardized Screen Framing */
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            height: 920px;
+            background: var(--bg-dark-green);
+            position: relative;
+            border-radius: 24px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.9);
+            overflow: hidden;
+            border: 6px solid #1a1c1e;
+            display: flex;
+            flex-direction: column;
+        }
 
-        /* FRAME 1: PASSCODE CODE */
-        #frame1 { background-color: var(--bg-blue); color: #333; }
-        .passcode-container { display: flex; background: #fff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-width: 700px; width: 100%; gap: 30px; }
-        .photo-holder { flex: 1; background: #f9f9f9; padding: 15px; border-radius: 10px; border: 1px solid #ddd; text-align: center; }
-        .photo-placeholder { background: #e0e0e0; height: 200px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; color: #666; overflow: hidden; position: relative; }
-        .photo-placeholder img { width: 100%; height: auto; display: block; border-radius: 8px; }
-        .keypad-side { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .code-display { display: flex; gap: 10px; margin-bottom: 20px; }
-        .code-dot { width: 40px; height: 40px; border: 2px solid #333; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; }
-        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-        .key { width: 50px; height: 50px; background: #f0f0f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: none; font-size: 16px; }
-        .key:active { background: #ddd; }
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 90px); /* Leave room for fixed music footer */
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
 
-        /* FRAME 2 & 3: PANDAS & SURPRISE */
-        #frame2 { background: radial-gradient(circle, var(--bg-light-green), var(--bg-dark-green)); }
-        #frame3 { background: radial-gradient(circle, #1a4a30, #081e12); }
-        .card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 40px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.2); text-align: center; max-width: 500px; width: 100%; }
-        .btn { background: var(--love-pink); color: white; border: none; padding: 12px 35px; font-size: 18px; border-radius: 25px; cursor: pointer; margin-top: 25px; font-weight: bold; transition: 0.3s; }
-        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255, 77, 121, 0.4); }
-        .btn-no { background: #555; margin-left: 10px; }
+        .screen.active {
+            display: flex;
+        }
 
-        /* FRAME 4: SCRAPBOOK GALLERY */
-        #frame4 { background: #18251c; padding-bottom: 100px; }
-        .scrapbook { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1000px; width: 100%; height: 100%; overflow: hidden; position: relative;}
-        .scrapbook img { width: 100%; height: auto; display: block; border-radius: 8px; }
-        @media (max-width: 768px) { .scrapbook { grid-template-columns: 1fr; } }
-        .photo-placeholder { background: #e0e0e0; height: 100px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; color: #666; overflow: hidden; position: relative; }
-        .photo-placeholder img { width: 100%; height: auto; display: block; border-radius: 8px; }
-        .column { background: #fff; color: #333; border-radius: 15px; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); text-align: center; }
-        .column-title { font-weight: bold; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-size: 14px; }
-        .col-1 { border-top: 8px solid #ff9999; }
-        .col-2 { border-top: 8px solid #cc99ff; }
-        .col-3 { border-top: 8px solid #ff6666; }
-        .scrapbook-img { background: #e0e0e0; height: 250px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #555; margin-bottom: 15px; font-size: 14px; }
-        .letter { font-style: italic; background: #fff9e6; padding: 15px; border-radius: 8px; font-size: 14px; line-height: 1.5; border: 1px dashed #ddcc99; }
+        /* Floating Heart Background Animation Elements */
+        .bg-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top:0; left:0;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.25;
+            background-image: radial-gradient(circle, rgba(42,111,57,0.3) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
 
-        /* MUSIC PLAYER */
-        .music-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #0b140e; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #222; z-index: 100; }
-        .track-info { display: flex; flex-direction: column; }
-        .track-title { font-weight: bold; color: #4caf50; font-size: 14px; }
-        .track-sub { font-size: 12px; color: #aaa; }
+        /* --- SCREEN: INTRO (Accept Gift) --- */
+        #screen-intro {
+            background-color: var(--soft-cream);
+            color: #433322;
+            justify-content: center;
+            height: 100%; /* Cover music bar initially */
+            z-index: 200;
+        }
+        #screen-intro h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        .penguin-container {
+            width: 220px;
+            height: 220px;
+            margin-bottom: 50px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .penguin-placeholder {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 50%;
+            border: 4px solid #ebd9c5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .intro-btn-group {
+            display: flex;
+            gap: 30px;
+            position: relative;
+            width: 100%;
+            justify-content: center;
+            height: 70px;
+            align-items: center;
+        }
+        .btn-action {
+            padding: 12px 45px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transition: transform 0.1s ease;
+        }
+        .btn-action:active { transform: scale(0.95); }
+        .btn-yes-intro { background-color: #5da46b; color: white; border: 3px solid #fff; }
+        .btn-no-intro { background-color: #d95366; color: white; border: 3px solid #fff; position: absolute; }
+
+        /* --- SCREEN: LOCK SCREEN --- */
+        #screen-lock {
+            background: linear-gradient(180deg, #051408 0%, #020904 100%);
+            justify-content: space-between;
+            padding: 50px 24px;
+        }
+        .welcome-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4.5rem;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(121,247,149,0.4);
+            margin-bottom: 5px;
+        }
+        .lock-subtitle {
+            font-size: 0.95rem;
+            color: #a3c4ab;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .lock-heart-dots {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .heart-dot {
+            font-size: 1.6rem;
+            color: rgba(255,255,255,0.2);
+            transition: color 0.2s, text-shadow 0.2s;
+        }
+        .heart-dot.active {
+            color: var(--text-glow-green);
+            text-shadow: 0 0 10px var(--text-glow-green);
+        }
+        .heart-keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px 25px;
+            width: 100%;
+            max-width: 310px;
+            margin-bottom: 30px;
+        }
+        .heart-key {
+            position: relative;
+            width: 75px;
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .heart-key svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            fill: #13351a;
+            stroke: #255d31;
+            stroke-width: 1.5;
+            transition: all 0.1s ease;
+        }
+        .heart-key:active svg {
+            fill: #225c2d;
+            filter: drop-shadow(0 0 8px var(--text-glow-green));
+        }
+        .heart-key span {
+            position: relative;
+            z-index: 2;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #d1ebd6;
+        }
+        .enter-bar-btn {
+            width: 100%;
+            max-width: 260px;
+            border: 2px solid #32753f;
+            background: linear-gradient(180deg, #174221 0%, #0d2a14 100%);
+            color: #e2fce6;
+            border-radius: 40px;
+            padding: 12px 0;
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            cursor: pointer;
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* --- SCREEN: CELEBRATION CANDLE --- */
+        #screen-celebration {
+            background: linear-gradient(180deg, #091e0e 0%, #030d05 100%);
+            justify-content: center;
+        }
+        .bday-banner-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
+            color: var(--accent-gold);
+            text-align: center;
+            line-height: 1.1;
+            text-shadow: 0 0 20px rgba(226,192,103,0.4);
+        }
+        .bday-subname {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-top: 5px;
+            margin-bottom: 40px;
+        }
+        .cake-container {
+            width: 280px;
+            height: 280px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed rgba(255,255,255,0.1);
+            margin-bottom: 40px;
+        }
+        .blow-instruction {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            color: #a3c4ab;
+            letter-spacing: 1px;
+        }
+
+        /* --- SCREEN: SURPRISE CONFIRMATION (Bear Layout) --- */
+        #screen-ask-surprise {
+            justify-content: center;
+        }
+        .cloud-speech {
+            background: #fff8ee;
+            color: #2b1f14;
+            padding: 24px 35px;
+            border-radius: 40px;
+            font-size: 1.8rem;
+            font-family: 'Caveat', cursive;
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border: 2px solid #ebd3b5;
+        }
+        .cloud-speech::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 15px 15px 0;
+            border-style: solid;
+            border-color: #fff8ee transparent;
+            display: block;
+            width: 0;
+        }
+        .bear-container {
+            width: 180px;
+            height: 180px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 50px;
+            border: 2px dashed rgba(255,255,255,0.1);
+        }
+        .ask-btn-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 320px;
+        }
+        .ask-btn {
+            flex: 1;
+            padding: 12px 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .btn-yes-ask {
+            background: linear-gradient(180deg, #275e32 0%, #153a1d 100%);
+            color: #fff;
+            border: 2px solid #3c874b;
+        }
+        .btn-no-ask {
+            background: linear-gradient(180deg, #b83244 0%, #7a1926 100%);
+            color: #fff;
+            border: 2px solid #d4485b;
+        }
+
+        /* --- SCREEN: 3 SURPRISES TEMPLATE GRID --- */
+        #screen-surprises-dashboard {
+            padding: 16px;
+            background: #041007;
+        }
+        .dashboard-header {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            width: 100%;
+        }
+        .dashboard-panel {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--grid-border-green);
+            border-radius: 12px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+            height: 600px;
+        }
+        .dashboard-panel:hover {
+            transform: translateY(-4px);
+            border-color: var(--text-glow-green);
+        }
+        .panel-ribbon-tag {
+            width: 100%;
+            padding: 4px 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+        .tag-pink { background-color: var(--panel-pink); color: #70262f; }
+        .tag-purple { background-color: var(--panel-purple); color: #422a6e; }
+        .tag-red { background-color: var(--panel-red); color: #822834; }
+
+        .panel-img-frame {
+            width: 100%;
+            height: 180px;
+            background: #142819;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: #638c6d;
+            text-align: center;
+            padding: 4px;
+        }
+        .panel-letter-paper {
+            background-color: #fff9ef;
+            color: #2b2218;
+            width: 100%;
+            border-radius: 6px;
+            margin-top: 8px;
+            padding: 8px;
+            font-family: 'Caveat', cursive;
+            font-size: 1rem;
+            line-height: 1.2;
+            flex-grow: 1;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .dashboard-footer-motto {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2rem;
+            color: var(--accent-gold);
+            margin-top: 25px;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* --- SCREEN: DETAILED SUBVIEWS (Penguin choice reveals) --- */
+        .subview-screen {
+            background-color: var(--soft-cream);
+            color: #33271b;
+            padding: 30px 24px;
+        }
+        .subview-header {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 2rem;
+            color: #1c3d24;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .subview-main-frame {
+            width: 100%;
+            height: 380px;
+            background: #eadaaf;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #b5a272;
+            margin-bottom: 24px;
+            color: #615331;
+        }
+        .subview-letter-long {
+            font-family: 'Caveat', cursive;
+            font-size: 1.3rem;
+            line-height: 1.4;
+            text-align: center;
+            padding: 0 10px;
+        }
+        .subview-back-btn {
+            background-color: #24542d;
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* --- FIXED FOOTER MUSIC BAR MOCKUP --- */
+        .music-footer-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            background: #020a04;
+            border-top: 1px solid #14331b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 100;
+        }
+        .music-info-side {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .vinyl-disc-logo {
+            width: 48px;
+            height: 48px;
+            background: radial-gradient(circle, #222 25%, #050505 26%, #111 70%, #444 100%);
+            border-radius: 50%;
+            border: 2px solid #285e33;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spin 4s linear infinite;
+        }
+        .vinyl-center-dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--text-glow-green);
+            border-radius: 50%;
+        }
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        .track-metadata p {
+            margin: 0;
+        }
+        .track-title { font-size: 0.95rem; font-weight: 600; color: #ffffff; }
+        .track-status { font-size: 0.75rem; color: #5ea86e; margin-top: 2px; }
+        .music-controls-side {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #aae0b8;
+            font-size: 0.85rem;
+        }
+        .play-pause-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #5ea86e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
 
-    <div id="frame1" class="frame active">
-        <div class="passcode-container">
-            <div class="photo-holder">
-                <div class="photo-placeholder"><img src="Image1.jpg.jpeg" alt="Childhood Dog Photo"></div>
-                <div class="photo-placeholder"><img src="Image2.jpg.jpeg" alt="Childhood Dog Photo"></div>
-                <p style="font-size: 12px; color:#666;">Unlock your memory vault</p>
-            </div>
-            <div class="keypad-side">
-                <h2 style="margin-bottom: 20px; text-align:center;">Enter Passcode</h2>
-                <div class="code-display">
-                    <div class="code-dot" id="dot0"></div>
-                    <div class="code-dot" id="dot1"></div>
-                    <div class="code-dot" id="dot2"></div>
-                    <div class="code-dot" id="dot3"></div>
-                </div>
-                <div class="keypad">
-                    <button class="key" onclick="press(2)">2</button>
-                    <button class="key" onclick="press(4)">4</button>
-                    <button class="key" onclick="press(7)">7</button>
-                    <button class="key" onclick="press(1)">1</button>
-                    <button class="key" onclick="press(9)">9</button>
-                    <button class="key" onclick="press(0)">0</button>
-                </div>
-                <p style="margin-top: 15px; font-size:12px; color:#e06666;" id="lock-msg">Hint: Use the active keys!</p>
-            </div>
-        </div>
-    </div>
+    <div class="app-container">
 
-    <div id="frame2" class="frame">
-        <div class="card">
-            <h1 style="color: #62c462; font-size: 2.5rem; margin-bottom: 15px;">Happy Birthday<br>Ennavl ❤️</h1>
-            <div style="background: rgba(255,255,255,0.1); height: 200px; border-radius: 15px; display:flex; justify-content:center; align-items:center; margin-bottom: 20px; font-weight:bold;">
-                [ 🐼 🐼 🐼 🎂 3 Pandas Celebration Image ]
-            </div>
-            <p>Make a wish and step inside your special day.</p>
-            <button class="btn" onclick="nextFrame(2, 3)">Blow the Candle 🎂</button>
-        </div>
-    </div>
-
-    <div id="frame3" class="frame">
-        <div class="card">
-            <div style="font-size: 50px; margin-bottom: 10px;">🐻</div>
-            <h2 style="font-size: 2rem; margin-bottom: 20px;">Are you ready for your surprise?</h2>
-            <button class="btn" onclick="nextFrame(3, 4)">❤️ YES</button>
-            <button class="btn btn-no" onclick="alert('Wrong choice! 😉 Click YES!')">NO</button>
-        </div>
-    </div>
-
-    <div id="frame4" class="frame">
-        <h1 style="margin-bottom: 40px; font-size: 2.5rem; text-align:center; color:#ff4d79;">✨ Forever & Always ✨</h1>
-        
-        <div class="scrapbook">
-            <div class="column col-1">
-                <div class="column-title">1. For You</div>
-                <div class="scrapbook-img"><img src="Image5.jpg.webp" alt="Together Photo"></div>
-                <div class="letter">
-                    <strong>Happy Birthday Ennavl ❤️</strong><br><br>
-                    You mean the absolute world to me! This day belongs completely to you.
+        <!-- SCREEN 1: DECORATIVE INTRO FROM VIDEO -->
+        <div id="screen-intro" class="screen active">
+            <h2>PLS ACCEPT THE GIFT 🐧❤️</h2>
+            <div class="penguin-container">
+                <div class="penguin-placeholder">
+                    <span style="color:#a68e74; font-size:0.9rem; text-align:center; padding:10px;">[Penguin Hugging Heart Image]</span>
                 </div>
             </div>
-
-            <div class="column col-2">
-                <div class="column-title">2. Our Memories</div>
-                <div class="photo-placeholder"><img src="Image6.jpg.jpeg" alt="Beach Photo"></div>
-                <div class="letter">
-                    In you, I found my today, and all of my tomorrows. Thank you for being my happiness, my safe place, and my everything.
-                </div>
-            </div>
-
-            <div class="column col-3">
-                <div class="column-title">3. My Heart</div>
-                <div class="scrapbook-img"><img src="Image3.jpg.jpeg" alt="Hand holding Photo"></div>
-                <div class="letter" style="background:#fff0f5;">
-                    <strong>I Love You<br>Forever & Always ❤️</strong><br><br>
-                    Hand in hand, we can take on anything the universe brings.
-                </div>
+            <div class="intro-btn-group" id="intro-btn-area">
+                <button class="btn-action btn-yes-intro" onclick="navigateTo('screen-lock')">YES</button>
+                <button class="btn-action btn-no-intro" id="runaway-no-btn">NO</button>
             </div>
         </div>
 
-        <div class="music-bar">
-            <div class="track-info">
-                <span class="track-title">🎵 Uyire Uyire</span>
-                <span class="track-sub">Amaran • Playing...</span>
+        <!-- SCREEN 2: HIGH FIDELITY LOCK SCREEN FROM THE TEMPLATE -->
+        <div id="screen-lock" class="screen">
+            <div class="bg-hearts"></div>
+            
+            <div style="text-align: center; width: 100%; z-index: 5;">
+                <h1 class="welcome-title">Welcome</h1>
+                <p class="lock-subtitle">Enter the password to unlock your surprise</p>
+                
+                <div style="display: flex; justify-content: center; width:100%;">
+                    <div class="lock-heart-dots" id="passcode-dots-row">
+                        <span class="heart-dot">♥</span>
+                        <span class="heart-dot">♥</span>
+                        <span class="heart-dot">♥</span>
+                        <span class="heart-dot">♥</span>
+                    </div>
+                </div>
             </div>
-            <div style="font-size: 20px; color: #4caf50;">▶️ ═══🔘═══ 00:45 / 04:48</div>
+
+            <!-- Heart Shaped Grid Keypad Alignment -->
+            <div class="heart-keypad" style="z-index: 5;">
+                <!-- Key 1 -->
+                <div class="heart-key" onclick="appendPinDigit('1')">
+                    <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
+                    <span>1</span>
+                </div>
+                <!-- Key 2 -->
+                <div class="heart-key" onclick="appendPinDigit('2')">
+                    <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
+                    <span>2</span>
+                </div>
+                <!-- Key 3 -->
+                <div class="heart-key" onclick="appendPinDigit('3')">
+                    <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
+                    <span>3</span>
+                </div>
+                <!-- Key 4 -->
+                <div class="heart-key" onclick="appendPinDigit('4')">
+                    <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
+                    <span>4</span>
+                </div>
+                <!-- Key 5 -->
+                <div class="heart-key" onclick="appendPinDigit('5')">
+                    <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
+                    <span>5</span>
+                </div>
+                <!-- Key 6 -->
+                <div class="heart-key" onclick="appendPinDigit('6')">
+                    <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
+                    <span>6</span>
+                </div>
+                <!-- Key 7 -->
+                <div class="heart-key" onclick="appendPinDigit('7')">
+                    <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
+                    <span>7</span>
+                </div>
+                <!-- Key 8 -->
+                <div class="heart-key" onclick="appendPinDigit('8')">
+                    <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
+                    <span>8</span>
+                </div>
+                <!-- Key 9 -->
+                <div class="heart-key" onclick="appendPinDigit('9')">
+                    <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
+                    <span>9</span>
+                </div>
+                <div></div> <!-- Empty Grid space alignment -->
+                <!-- Key 0 -->
+                <div class="heart-key" onclick="appendPinDigit('0')">
+                    <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
+                    <span>0</span>
+                </div>
+                <!-- Delete Key -->
+                <div class="heart-key" onclick="popPinDigit()">
+                    <svg viewBox="0 0 32 32"><path d="M16,28.2 C16,28.2 2,18.2 2,11 C2,6 6,2 11,2 C14,2 16,5 16,5 C16,5 18,2 21,2 C26,2 30,6 30,11 C30,18.2 16,28.2 16,28.2 Z"/></svg>
+                    <span style="font-size:1.1rem;">⌫</span>
+                </div>
+            </div>
+
+            <button class="enter-bar-btn" style="z-index: 5;" onclick="submitPinCode()">♥ ENTER ♥</button>
         </div>
+
+        <!-- SCREEN 3: CAKE BLOW VIEW FROM THE TEMPLATE -->
+        <div id="screen-celebration" class="screen">
+            <div class="bg-hearts"></div>
+            <h2 class="bday-banner-text">Happy<br>Birthday</h2>
+            <h3 class="bday-subname">Ennavl</h3>
+            
+            <div class="cake-container" onclick="navigateTo('screen-ask-surprise')">
+                <span style="color:#7ca685; font-size: 0.95rem; text-align: center; padding: 20px;">
+                    [Three Pandas & Cake Graphic Frame Placeholder - Click to Blow Candle]
+                </span>
+            </div>
+            
+            <p class="blow-instruction">♥ Blow the candle ♥</p>
+        </div>
+
+        <!-- SCREEN 4: BEAR YES/NO BOX SCREEN -->
+        <div id="screen-ask-surprise" class="screen">
+            <div class="cloud-speech">
+                Are you ready for surprise?
+            </div>
+            
+            <div class="bear-container">
+                <span style="color:#7ca685; font-size:0.85rem;">[Cute Teddy Bear Frame]</span>
+            </div>
+
+            <div class="ask-btn-container">
+                <button class="ask-btn btn-yes-ask" onclick="navigateTo('screen-surprises-dashboard')">♥ YES</button>
+                <button class="ask-btn btn-no-ask" onclick="alert('You must accept your surprise! 😉')">♥ NO</button>
+            </div>
+        </div>
+
+        <!-- SCREEN 5: MAIN 3 SURPRISES DASHBOARD PANEL GRID -->
+        <div id="screen-surprises-dashboard" class="screen">
+            <h2 class="dashboard-header">♥ Your 3 Surprises ♥</h2>
+            
+            <div class="dashboard-grid">
+                <!-- Surprise 1 Panel Column -->
+                <div class="dashboard-panel" onclick="navigateTo('view-surprise-1')">
+                    <div class="panel-ribbon-tag tag-pink">1. For You</div>
+                    <div class="panel-img-frame">[Couple Picture 1 Frame]</div>
+                    <div class="panel-letter-paper">
+                        <b style="font-size:1.1rem; color:#70262f;">Happy Birthday Ennavl ♥</b>
+                        <p style="margin-top:6px;">You mean the world to me!</p>
+                    </div>
+                </div>
+
+                <!-- Surprise 2 Panel Column -->
+                <div class="dashboard-panel" onclick="navigateTo('view-surprise-2')">
+                    <div class="panel-ribbon-tag tag-purple">2. Our Memories</div>
+                    <div class="panel-img-frame">[Couple Picture 2 Frame]</div>
+                    <div class="panel-letter-paper">
+                        <p>In you, I found my today and all of my tomorrow...</p>
+                    </div>
+                </div>
+
+                <!-- Surprise 3 Panel Column -->
+                <div class="dashboard-panel" onclick="navigateTo('view-surprise-3')">
+                    <div class="panel-ribbon-tag tag-red">3. My Heart</div>
+                    <div class="panel-img-frame">[Heart Hand Frame]</div>
+                    <div class="panel-letter-paper">
+                        <p style="text-align:center; margin-top:20px; font-weight:bold; color:#822834;">I Love You Forever & Always ♥</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-footer-motto">♥ Forever & Always ♥</div>
+        </div>
+
+        <!-- SUBVIEW DETAIL VIEWS -->
+        <div id="view-surprise-1" class="screen subview-screen">
+            <h2 class="subview-header">For You 🌸</h2>
+            <div class="subview-main-frame">[Detailed Photo 1 Inside]</div>
+            <p class="subview-letter-long">"Every single conversation with you brings a huge smile to my face. You are my safe place."</p>
+            <button class="subview-back-btn" onclick="navigateTo('screen-surprises-dashboard')">Return</button>
+        </div>
+
+        <div id="view-surprise-2" class="screen subview-screen">
+            <h2 class="subview-header">Our Memories 📸</h2>
+            <div class="subview-main-frame">[Detailed Photo 2 Inside]</div>
+            <p class="subview-letter-long">"Thank you for being my constant, my happiness, and my everything through every single moment."</p>
+            <button class="subview-back-btn" onclick="navigateTo('screen-surprises-dashboard')">Return</button>
+        </div>
+
+        <div id="view-surprise-3" class="screen subview-screen">
+            <h2 class="subview-header">My Whole Heart ❤️</h2>
+            <div class="subview-main-frame">[Detailed Photo 3 Inside]</div>
+            <p class="subview-letter-long">"You are the best kind of person. No matter where life takes us, my heart belongs to you."</p>
+            <button class="subview-back-btn" onclick="navigateTo('screen-surprises-dashboard')">Return</button>
+        </div>
+
+        <!-- FIXED FOOTER MUSIC CONTROLLER -->
+        <div class="music-footer-bar">
+            <div class="music-info-side">
+                <div class="vinyl-disc-logo">
+                    <div class="vinyl-center-dot"></div>
+                </div>
+                <div class="track-metadata">
+                    <p class="track-title">Uyire Uyire - Amaran</p>
+                    <p class="track-status">Playing...</p>
+                </div>
+            </div>
+            <div class="music-controls-side">
+                <span>⏮</span>
+                <div class="play-pause-circle">⏸</div>
+                <span>⏭</span>
+                <span style="font-size:0.75rem; margin-left:2px; color:#6ca67b;">00:45 / 04:48</span>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        // Passcode Logic
-        const targetCode = [2, 4, 4, 0]; // Simulating an arbitrary 4-digit key pattern
-        let inputCode = [];
+        // Set standard entry passcode value (Customizable)
+        const TARGET_PASSCODE = "1234";
+        let enteredPinString = "";
 
-        function press(num) {
-            if(inputCode.length < 4) {
-                inputCode.push(num);
-                document.getElementById(`dot${inputCode.length-1}`).innerText = num === 0 ? '*' : num;
-            }
-            if(inputCode.length === 4) {
-                setTimeout(() => {
-                    // Instantly unlocking to proceed to show layout
-                    nextFrame(1, 2);
-                }, 400);
+        // Runaway Button Mechanism
+        const runawayBtn = document.getElementById('runaway-no-btn');
+        const boundaryArea = document.getElementById('intro-btn-area');
+
+        runawayBtn.addEventListener('mouseover', () => {
+            const maxX = boundaryArea.clientWidth - runawayBtn.clientWidth;
+            const maxY = boundaryArea.clientHeight - runawayBtn.clientHeight;
+
+            const targetX = Math.max(10, Math.floor(Math.random() * maxX));
+            runawayBtn.style.left = `${targetX}px`;
+        });
+
+        runawayBtn.addEventListener('click', () => {
+            alert("The gift can only be accepted! Click YES! 😉");
+        });
+
+        // Navigation engine
+        function navigateTo(targetScreenId) {
+            document.querySelectorAll('.screen').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.getElementById(targetScreenId).classList.add('active');
+        }
+
+        // Lockscreen Input Logic
+        function appendPinDigit(digit) {
+            if (enteredPinString.length < 4) {
+                enteredPinString += digit;
+                refreshPasscodeDots();
             }
         }
 
-        function nextFrame(current, next) {
-            document.getElementById(`frame${current}`).classList.remove('active');
-            document.getElementById(`frame${next}`).classList.add('active');
-            window.scrollTo(0,0);
+        function popPinDigit() {
+            enteredPinString = enteredPinString.slice(0, -1);
+            refreshPasscodeDots();
+        }
+
+        function refreshPasscodeDots() {
+            const graphicDots = document.querySelectorAll('#passcode-dots-row .heart-dot');
+            graphicDots.forEach((dotSpan, index) => {
+                if (index < enteredPinString.length) {
+                    dotSpan.classList.add('active');
+                } else {
+                    dotSpan.classList.remove('active');
+                }
+            });
+        }
+
+        function submitPinCode() {
+            if (enteredPinString === TARGET_PASSCODE) {
+                navigateTo('screen-celebration');
+            } else {
+                alert("Incorrect Password! Hint: Use the code 1234 💚");
+                enteredPinString = "";
+                refreshPasscodeDots();
+            }
         }
     </script>
 </body>
