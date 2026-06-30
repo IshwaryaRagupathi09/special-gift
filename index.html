@@ -622,6 +622,38 @@
 
         .timeline-duration { font-size: 0.75rem; color: #568a61; }
 
+        .cake-image-wrapper {
+            width: 100%;
+            max-width: 480px;
+            aspect-ratio: 3 / 4; /* Keeps the frame perfectly rectangular like a card */
+            border-radius: 24px;
+            border: 4px solid #1d4425;
+            background-image: url('Frame2.jpeg'); /* Direct binding to your cute asset */
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.8), 0 0 25px rgba(121, 247, 149, 0.3);
+        }
+
+        .action-blow-btn {
+            width: 100%;
+            max-width: 280px;
+            height: 50px;
+            border: 2px solid #e2c067;
+            background: rgba(226, 192, 103, 0.08); /* Semi-transparent gold base tint */
+            border-radius: 25px;
+            color: var(--text-gold);
+            font-weight: 600;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(226, 192, 103, 0.2);
+            transition: all 0.2s ease;
+        }
+        .action-blow-btn:hover {
+            background: var(--text-gold);
+            color: #0c0d0e; /* Flips color on hover for high-contrast click feedback */
+            box-shadow: 0 0 25px var(--gold-glow);
+        }
+
         /* =========================================
            ADAPTIVE VIEWPORT MEDIA RESPONSIVITY RULES
            ========================================= */
@@ -757,6 +789,14 @@
                 <button class="action-retry-btn" onclick="returnToKeypad()">Try Again 🥺</button>
             </div>
         </div>
+
+        <div id="cakeView" class="frame-view">
+            <div class="cake-frame-container">
+                <div class="cake-image-wrapper"></div>
+                <button class="action-blow-btn" onclick="proceedToDashboard()">Blow the candle 🎂</button>
+            </div>
+        </div>
+
 
         <div id="dashboardView" class="frame-view">
             <h1 class="header-title">♡ Your 3 Surprises ♡</h1>
@@ -925,11 +965,16 @@
             if (currentInputCode === CORRECT_PASSWORD) {
                 document.getElementById('lockscreenView').classList.remove('active-view');
                 document.getElementById('errorPandaView').classList.remove('active-view');
-                document.getElementById('dashboardView').classList.add('active-view');
+                document.getElementById('cakeView').classList.add('active-view');
             } else {
                 document.getElementById('lockscreenView').classList.remove('active-view');
                 document.getElementById('errorPandaView').classList.add('active-view');
             }
+        }
+
+        function proceedToDashboard() {
+            document.getElementById('cakeView').classList.remove('active-view');
+            document.getElementById('dashboardView').classList.add('active-view');
         }
 
         function returnToKeypad() {
