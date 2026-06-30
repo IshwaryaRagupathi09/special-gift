@@ -101,14 +101,17 @@
             100% { opacity: 0; transform: scale(0.8) translateY(-25px); }
         }
 
+        /* Hide all frames by default */
         .frame-view {
             display: none;
             width: 100%;
-            flex-grow: 1;
+            height: 100%;
             flex-direction: column;
-            justify-content: space-between;
-            z-index: 5;
+            justify-content: center;
+            align-items: center;
         }
+        
+        /* Only the active one is shown */
         .frame-view.active-view {
             display: flex;
         }
@@ -636,12 +639,10 @@
             </div>
         </div>
 
-        <div id="cakeView" class="frame-view">
-            <div class="cake-frame-container">
-                <div class="cake-image-box clickable-cake" onclick="proceedToFrame3()">
-                    <img src="Frame2.jpeg" alt="Click to Blow the Candle">
-                </div>
-                </div>
+        <div id="cakeView" class="frame-view active-view"> <!-- Initially active -->
+            <div class="interactive-container" onclick="proceedToFrame3()">
+                <img src="Frame2.jpeg" alt="Blow the candle">
+            </div>
         </div>
 
         <div id="frame3View" class="frame-view">
@@ -782,8 +783,20 @@
         }
 
         function proceedToFrame3() {
-            document.getElementById('cakeView').classList.remove('active-view');
-            document.getElementById('frame3View').classList.add('active-view');
+            console.log("Attempting to switch to Frame 3..."); // Debugging check
+    
+            // 1. Remove active class from ALL views first
+            document.querySelectorAll('.frame-view').forEach(view => {
+                view.classList.remove('active-view');
+            });
+            
+            // 2. Add active class to Frame 3
+            const f3 = document.getElementById('frame3View');
+            if (f3) {
+                f3.classList.add('active-view');
+            } else {
+                console.error("Frame 3 element not found!");
+            }
         }
 
         function showDashboard() {
