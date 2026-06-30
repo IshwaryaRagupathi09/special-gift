@@ -289,35 +289,23 @@
         }
 
         /* --- THE RESTORED IMAGE FRAMES BLOCK STYLING --- */
+        /* --- THE FIXED IMAGE FRAMES BLOCK STYLING --- */
         .lockscreen-showcase-side {
             display: flex;
+            flex-direction: column; /* CHANGED: Stacks the images vertically */
             gap: 20px;
-            flex-grow: 1;
             justify-content: center;
-            max-width: 580px;
+            max-width: 320px; /* Adjusted to look sleek alongside the keypad */
+            width: 100%;
             z-index: 5;
         }
-
-        /*.showcase-matte {
-            width: 50%;
-            height: 460px;
-            border-radius: 20px;
-            border: 3px solid #1c3d23;
-            background-size: cover;
-            background-position: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            position: relative;
-        }*/
-
+        
         .showcase-matte {
-            width: 50%;
-            /* CHANGED: Removed the rigid 460px height so the box collapses down to match the image size */
-            height: auto; 
-            /* CHANGED: Forces the container to follow a standard photo aspect ratio (4:3 or 16:9 works great) */
-            aspect-ratio: 4 / 3; 
+            width: 100%; /* CHANGED: Takes full width of the side column */
+            height: auto;
+            aspect-ratio: 4 / 3; /* Maintains the beautiful landscape photo shape */
             border-radius: 20px;
             border: 3px solid #1c3d23;
-            /* CHANGED: Changed back to cover because the aspect-ratio now guarantees a perfect edge-to-edge fit */
             background-size: cover; 
             background-position: center center; 
             box-shadow: 0 15px 35px rgba(0,0,0,0.6);
@@ -567,7 +555,7 @@
         @media (max-width: 860px) {
             /* FIXED: Clean column alignment to prevent frame drift or left-chopping issues */
             .lockscreen-split-layout { flex-direction: column; gap: 25px; align-items: center; }
-            .lockscreen-showcase-side { width: 100%; max-width: 400px; }
+            .lockscreen-showcase-side { max-width: 400px; }
             .showcase-matte { height: 220px; }
         }
 
