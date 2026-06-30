@@ -3,460 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Ennavl 💚</title>
+    <title>Birthday Surprise for Ennavl</title>
     <style>
         :root {
-            --bg-dark-green: #0a2310;
-            --primary-green: #2d6a4f;
-            --light-green: #52b788;
-            --heart-pink: #ff4d6d;
-            --soft-cream: #fbf8f3;
+            --bg-blue: #7fa9d8;
+            --bg-dark-green: #0a2f1d;
+            --bg-light-green: #14422b;
+            --love-pink: #ff4d79;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background-color: #111; color: #fff; overflow-x: hidden; }
 
-        body {
-            background-color: #111;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Phone / Card Container Mockup */
-        .app-container {
-            width: 100%;
-            max-width: 430px;
-            height: 920px;
-            background: var(--bg-dark-green);
-            position: relative;
-            border-radius: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-            overflow: hidden;
-            border: 4px solid #222;
-        }
-
-        .screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        .frame {
             display: none;
+            min-height: 100vh;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            animation: fadeIn 0.5s ease-in-out forwards;
-        }
-
-        .screen.active {
-            display: flex;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* --- SCREEN 1: ACCEPT GIFT (Intro) --- */
-        #screen-intro {
-            background-color: var(--soft-cream);
-            color: #333;
-            text-align: center;
-        }
-        #screen-intro h2 {
-            font-size: 1.8rem;
-            color: var(--heart-pink);
-            margin-bottom: 30px;
-        }
-        .gif-placeholder {
-            width: 200px;
-            height: 200px;
-            background: #eee;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 50px;
-            font-size: 0.9rem;
-            border: 3px dashed #ccc;
-        }
-        .btn-group {
-            display: flex;
-            gap: 20px;
             position: relative;
-            width: 100%;
-            justify-content: center;
-            height: 60px;
-        }
-        .btn {
-            padding: 12px 35px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 25px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-yes { background-color: #4caf50; color: white; }
-        .btn-no { 
-            background-color: var(--heart-pink); 
-            color: white; 
-            position: absolute;
+            padding: 20px;
         }
 
-        /* --- SCREEN 2: LOCKSCREEN --- */
-        #screen-lock {
-            background: linear-gradient(135deg, #05160b 0%, #0c2d16 100%);
-        }
-        .lock-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .lock-header h1 { font-family: 'Georgia', serif; font-size: 2.5rem; color: var(--light-green); }
-        .dots-container {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-        .dot {
-            width: 18px;
-            height: 18px;
-            border: 2px solid var(--light-green);
-            border-radius: 50%;
-            transition: background 0.2s;
-        }
-        .dot.filled { background-color: var(--light-green); }
-        .keypad {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            width: 80%;
-            max-width: 300px;
-        }
-        .key {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 1.5rem;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            user-select: none;
-        }
-        .key:active { background: var(--primary-green); }
-        .enter-btn {
-            grid-column: span 3;
-            border-radius: 25px;
-            height: 50px;
-            background: var(--primary-green);
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-        }
+        .active { display: flex; }
 
-        /* --- SCREEN 3: ASKING FOR SURPRISE --- */
-        #screen-ask {
-            text-align: center;
-        }
-        .bear-placeholder {
-            width: 180px;
-            height: 180px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            margin: 40px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        /* FRAME 1: PASSCODE CODE */
+        #frame1 { background-color: var(--bg-blue); color: #333; }
+        .passcode-container { display: flex; background: #fff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-width: 700px; width: 100%; gap: 30px; }
+        .photo-holder { flex: 1; background: #f9f9f9; padding: 15px; border-radius: 10px; border: 1px solid #ddd; text-align: center; }
+        .photo-placeholder { background: #e0e0e0; height: 200px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; color: #666; overflow: hidden; position: relative; }
+        .photo-placeholder img { width: 100%; height: auto; display: block; border-radius: 8px; }
+        .keypad-side { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .code-display { display: flex; gap: 10px; margin-bottom: 20px; }
+        .code-dot { width: 40px; height: 40px; border: 2px solid #333; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; }
+        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .key { width: 50px; height: 50px; background: #f0f0f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: none; font-size: 16px; }
+        .key:active { background: #ddd; }
 
-        /* --- SCREEN 4: CHOOSE SURPRISES (Main Grid) --- */
-        #screen-main-surprises {
-            background: #07190c;
-            justify-content: flex-start;
-            padding-top: 40px;
-        }
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            width: 100%;
-            margin-top: 30px;
-        }
-        .surprise-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 15px;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.2s;
-            height: 550px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .surprise-card:hover { transform: translateY(-5px); }
-        .card-slot-1 { border-top: 5px solid #ffb3c1; }
-        .card-slot-2 { border-top: 5px solid #c8b6ff; }
-        .card-slot-3 { border-top: 5px solid #ff9393; }
+        /* FRAME 2 & 3: PANDAS & SURPRISE */
+        #frame2 { background: radial-gradient(circle, var(--bg-light-green), var(--bg-dark-green)); }
+        #frame3 { background: radial-gradient(circle, #1a4a30, #081e12); }
+        .card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 40px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.2); text-align: center; max-width: 500px; width: 100%; }
+        .btn { background: var(--love-pink); color: white; border: none; padding: 12px 35px; font-size: 18px; border-radius: 25px; cursor: pointer; margin-top: 25px; font-weight: bold; transition: 0.3s; }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255, 77, 121, 0.4); }
+        .btn-no { background: #555; margin-left: 10px; }
 
-        .img-slot {
-            width: 100%;
-            height: 180px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-        }
-        .card-text {
-            background: #fff;
-            color: #333;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            margin-top: 10px;
-            flex-grow: 1;
-            text-align: left;
-        }
+        /* FRAME 4: SCRAPBOOK GALLERY */
+        #frame4 { background: #18251c; padding-bottom: 100px; }
+        .scrapbook { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1000px; width: 100%; height: 100%; overflow: hidden; position: relative;}
+        .scrapbook img { width: 100%; height: auto; display: block; border-radius: 8px; }
+        @media (max-width: 768px) { .scrapbook { grid-template-columns: 1fr; } }
+        .photo-placeholder { background: #e0e0e0; height: 100px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; color: #666; overflow: hidden; position: relative; }
+        .photo-placeholder img { width: 100%; height: auto; display: block; border-radius: 8px; }
+        .column { background: #fff; color: #333; border-radius: 15px; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); text-align: center; }
+        .column-title { font-weight: bold; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-size: 14px; }
+        .col-1 { border-top: 8px solid #ff9999; }
+        .col-2 { border-top: 8px solid #cc99ff; }
+        .col-3 { border-top: 8px solid #ff6666; }
+        .scrapbook-img { background: #e0e0e0; height: 250px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #555; margin-bottom: 15px; font-size: 14px; }
+        .letter { font-style: italic; background: #fff9e6; padding: 15px; border-radius: 8px; font-size: 14px; line-height: 1.5; border: 1px dashed #ddcc99; }
 
-        /* --- SCREEN 5, 6, 7: DETAIL SUB-SCREENS --- */
-        .detail-screen {
-            background: var(--soft-cream);
-            color: #333;
-            padding: 30px;
-            text-align: center;
-        }
-        .detail-screen h2 { margin-bottom: 20px; color: var(--bg-dark-green); }
-        .back-btn {
-            margin-top: 30px;
-            padding: 10px 20px;
-            background: var(--primary-green);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-
-        /* Music Player Footer Bar */
-        .music-player-footer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.85rem;
-            z-index: 100;
-        }
+        /* MUSIC PLAYER */
+        .music-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #0b140e; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #222; z-index: 100; }
+        .track-info { display: flex; flex-direction: column; }
+        .track-title { font-weight: bold; color: #4caf50; font-size: 14px; }
+        .track-sub { font-size: 12px; color: #aaa; }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-
-        <div id="screen-intro" class="screen active">
-            <h2>PLS ACCEPT THE GIFT 🐧❤️</h2>
-            <div class="gif-placeholder">
-                [Penguin Gift Animation Placeholder]
+    <div id="frame1" class="frame active">
+        <div class="passcode-container">
+            <div class="photo-holder">
+                <div class="photo-placeholder"><img src="Image1.jpg.jpeg" alt="Childhood Dog Photo"></div>
+                <div class="photo-placeholder"><img src="Image2.jpg.jpeg" alt="Childhood Dog Photo"></div>
+                <p style="font-size: 12px; color:#666;">Unlock your memory vault</p>
             </div>
-            <div class="btn-group" id="intro-btn-group">
-                <button class="btn btn-yes" onclick="nextScreen('screen-lock')">YES</button>
-                <button class="btn btn-no" id="no-btn">NO</button>
-            </div>
-        </div>
-
-        <div id="screen-lock" class="screen">
-            <div class="lock-header">
-                <h1>Welcome 💚</h1>
-                <p style="color: var(--light-green); font-size: 0.9rem; margin-top: 10px;">Enter the password to unlock your surprise</p>
-            </div>
-            <div class="dots-container" id="dots-container">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-            </div>
-            <div class="keypad">
-                <div class="key" onclick="pressKey('1')">1</div>
-                <div class="key" onclick="pressKey('2')">2</div>
-                <div class="key" onclick="pressKey('3')">3</div>
-                <div class="key" onclick="pressKey('4')">4</div>
-                <div class="key" onclick="pressKey('5')">5</div>
-                <div class="key" onclick="pressKey('6')">6</div>
-                <div class="key" onclick="pressKey('7')">7</div>
-                <div class="key" onclick="pressKey('8')">8</div>
-                <div class="key" onclick="pressKey('9')">9</div>
-                <div class="key" onclick="pressKey('0')">0</div>
-                <div class="key" onclick="clearKey()">❌</div>
-                <button class="key enter-btn" onclick="verifyPin()">ENTER</button>
-            </div>
-        </div>
-
-        <div id="screen-ask" class="screen">
-            <h2 style="font-family: serif; font-size: 2rem;">Are you ready for surprise? ❤️</h2>
-            <div class="bear-placeholder">
-                [Cute Bear Image Placeholder]
-            </div>
-            <div style="display:flex; gap: 20px;">
-                <button class="btn btn-yes" style="background: #2d6a4f;" onclick="nextScreen('screen-main-surprises')">YES 💚</button>
-                <button class="btn" style="background: #a11d33; color: white;" onclick="alert('You must say yes! 😉')">NO 💔</button>
-            </div>
-        </div>
-
-        <div id="screen-main-surprises" class="screen">
-            <h2 style="font-family: serif; color: var(--light-green);">💚 Your 3 Surprises 💚</h2>
-            
-            <div class="grid-container">
-                <div class="surprise-card card-slot-1" onclick="nextScreen('surprise-1')">
-                    <div>
-                        <span style="color: #ff4d6d; font-weight: bold; font-size: 0.8rem;">1. For You</span>
-                        <div class="img-slot">[Couple Image 1]</div>
-                    </div>
-                    <div class="card-text">
-                        <b>Happy Birthday Ennavl ❤️</b><br>You mean the world to me!
-                    </div>
+            <div class="keypad-side">
+                <h2 style="margin-bottom: 20px; text-align:center;">Enter Passcode</h2>
+                <div class="code-display">
+                    <div class="code-dot" id="dot0"></div>
+                    <div class="code-dot" id="dot1"></div>
+                    <div class="code-dot" id="dot2"></div>
+                    <div class="code-dot" id="dot3"></div>
                 </div>
-
-                <div class="surprise-card card-slot-2" onclick="nextScreen('surprise-2')">
-                    <div>
-                        <span style="color: #7209b7; font-weight: bold; font-size: 0.8rem;">2. Our Memories</span>
-                        <div class="img-slot">[Couple Image 2]</div>
-                    </div>
-                    <div class="card-text">
-                        In you, I found my today and all of my tomorrow...
-                    </div>
+                <div class="keypad">
+                    <button class="key" onclick="press(2)">2</button>
+                    <button class="key" onclick="press(4)">4</button>
+                    <button class="key" onclick="press(7)">7</button>
+                    <button class="key" onclick="press(1)">1</button>
+                    <button class="key" onclick="press(9)">9</button>
+                    <button class="key" onclick="press(0)">0</button>
                 </div>
+                <p style="margin-top: 15px; font-size:12px; color:#e06666;" id="lock-msg">Hint: Use the active keys!</p>
+            </div>
+        </div>
+    </div>
 
-                <div class="surprise-card card-slot-3" onclick="nextScreen('surprise-3')">
-                    <div>
-                        <span style="color: #e63946; font-weight: bold; font-size: 0.8rem;">3. My Heart</span>
-                        <div class="img-slot">[Heart Hands Image]</div>
-                    </div>
-                    <div class="card-text">
-                        I Love You Forever & Always ❤️
-                    </div>
+    <div id="frame2" class="frame">
+        <div class="card">
+            <h1 style="color: #62c462; font-size: 2.5rem; margin-bottom: 15px;">Happy Birthday<br>Ennavl ❤️</h1>
+            <div style="background: rgba(255,255,255,0.1); height: 200px; border-radius: 15px; display:flex; justify-content:center; align-items:center; margin-bottom: 20px; font-weight:bold;">
+                [ 🐼 🐼 🐼 🎂 3 Pandas Celebration Image ]
+            </div>
+            <p>Make a wish and step inside your special day.</p>
+            <button class="btn" onclick="nextFrame(2, 3)">Blow the Candle 🎂</button>
+        </div>
+    </div>
+
+    <div id="frame3" class="frame">
+        <div class="card">
+            <div style="font-size: 50px; margin-bottom: 10px;">🐻</div>
+            <h2 style="font-size: 2rem; margin-bottom: 20px;">Are you ready for your surprise?</h2>
+            <button class="btn" onclick="nextFrame(3, 4)">❤️ YES</button>
+            <button class="btn btn-no" onclick="alert('Wrong choice! 😉 Click YES!')">NO</button>
+        </div>
+    </div>
+
+    <div id="frame4" class="frame">
+        <h1 style="margin-bottom: 40px; font-size: 2.5rem; text-align:center; color:#ff4d79;">✨ Forever & Always ✨</h1>
+        
+        <div class="scrapbook">
+            <div class="column col-1">
+                <div class="column-title">1. For You</div>
+                <div class="scrapbook-img"><img src="Image5.jpg.webp" alt="Together Photo"></div>
+                <div class="letter">
+                    <strong>Happy Birthday Ennavl ❤️</strong><br><br>
+                    You mean the absolute world to me! This day belongs completely to you.
                 </div>
             </div>
 
-            <p style="margin-top: 30px; font-style: italic; color: var(--light-green);">✨ Forever & Always ✨</p>
-        </div>
-
-        <div id="surprise-1" class="screen detail-screen">
-            <h2>For You 🌸</h2>
-            <div class="img-slot" style="height: 300px; width:100%;">[Large Photo Template 1]</div>
-            <p style="margin-top:20px;">Detailed beautiful birthday message goes here...</p>
-            <button class="back-btn" onclick="nextScreen('screen-main-surprises')">Back to Choices</button>
-        </div>
-
-        <div id="surprise-2" class="screen detail-screen">
-            <h2>Our Memories 📸</h2>
-            <div class="img-slot" style="height: 300px; width:100%;">[Large Photo Template 2]</div>
-            <p style="margin-top:20px;">A beautiful grid of your unforgettable moments together.</p>
-            <button class="back-btn" onclick="nextScreen('screen-main-surprises')">Back to Choices</button>
-        </div>
-
-        <div id="surprise-3" class="screen detail-screen">
-            <h2>My Whole Heart ❤️</h2>
-            <div class="img-slot" style="height: 300px; width:100%;">[Large Photo Template 3]</div>
-            <p style="margin-top:20px;">Will you stay mine forever?</p>
-            <button class="back-btn" onclick="nextScreen('screen-main-surprises')">Back to Choices</button>
-        </div>
-
-        <div class="music-player-footer">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 1.5rem;">🎵</span>
-                <div>
-                    <p style="font-weight: bold; margin: 0;">Uyire Uyire - Amaran</p>
-                    <p style="font-size: 0.7rem; color: #aaa; margin: 0;">Playing...</p>
+            <div class="column col-2">
+                <div class="column-title">2. Our Memories</div>
+                <div class="photo-placeholder"><img src="Image6.jpg.jpeg" alt="Beach Photo"></div>
+                <div class="letter">
+                    In you, I found my today, and all of my tomorrows. Thank you for being my happiness, my safe place, and my everything.
                 </div>
             </div>
-            <div>
-                <span>▶️</span> &nbsp; <span>00:45 / 04:48</span>
+
+            <div class="column col-3">
+                <div class="column-title">3. My Heart</div>
+                <div class="scrapbook-img"><img src="Image3.jpg.jpeg" alt="Hand holding Photo"></div>
+                <div class="letter" style="background:#fff0f5;">
+                    <strong>I Love You<br>Forever & Always ❤️</strong><br><br>
+                    Hand in hand, we can take on anything the universe brings.
+                </div>
             </div>
         </div>
 
+        <div class="music-bar">
+            <div class="track-info">
+                <span class="track-title">🎵 Uyire Uyire</span>
+                <span class="track-sub">Amaran • Playing...</span>
+            </div>
+            <div style="font-size: 20px; color: #4caf50;">▶️ ═══🔘═══ 00:45 / 04:48</div>
+        </div>
     </div>
 
     <script>
-        // --- State Variables ---
-        let currentPin = "";
-        const correctPin = "1234"; // You can set your desired 4-digit code here
+        // Passcode Logic
+        const targetCode = [2, 4, 4, 0]; // Simulating an arbitrary 4-digit key pattern
+        let inputCode = [];
 
-        // --- Runaway "NO" Button Mechanic ---
-        const noBtn = document.getElementById('no-btn');
-        const container = document.getElementById('intro-btn-group');
-
-        noBtn.addEventListener('mouseover', () => {
-            const containerWidth = container.clientWidth - noBtn.clientWidth;
-            const containerHeight = container.clientHeight - noBtn.clientHeight;
-            
-            // Randomly re-position button inside the scope area when hovered
-            const randomX = Math.max(0, Math.floor(Math.random() * containerWidth));
-            noBtn.style.left = `${randomX}px`;
-        });
-
-        noBtn.addEventListener('click', () => {
-            alert("Nice try! Click YES to accept your gift! 😉");
-        });
-
-        // --- Screen Navigation Engine ---
-        function nextScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(screen => {
-                screen.classList.remove('active');
-            });
-            document.getElementById(screenId).classList.add('active');
-        }
-
-        // --- Lockscreen Pin Engine ---
-        function pressKey(num) {
-            if (currentPin.length < 4) {
-                currentPin += num;
-                updateDots();
+        function press(num) {
+            if(inputCode.length < 4) {
+                inputCode.push(num);
+                document.getElementById(`dot${inputCode.length-1}`).innerText = num === 0 ? '*' : num;
+            }
+            if(inputCode.length === 4) {
+                setTimeout(() => {
+                    // Instantly unlocking to proceed to show layout
+                    nextFrame(1, 2);
+                }, 400);
             }
         }
 
-        function clearKey() {
-            currentPin = currentPin.slice(0, -1);
-            updateDots();
-        }
-
-        function updateDots() {
-            const dots = document.querySelectorAll('#dots-container .dot');
-            dots.forEach((dot, index) => {
-                if (index < currentPin.length) {
-                    dot.classList.add('filled');
-                } else {
-                    dot.classList.remove('filled');
-                }
-            });
-        }
-
-        function verifyPin() {
-            if (currentPin === correctPin) {
-                nextScreen('screen-ask');
-            } else {
-                alert("Incorrect password! Try again 💖");
-                currentPin = "";
-                updateDots();
-            }
+        function nextFrame(current, next) {
+            document.getElementById(`frame${current}`).classList.remove('active');
+            document.getElementById(`frame${next}`).classList.add('active');
+            window.scrollTo(0,0);
         }
     </script>
 </body>
