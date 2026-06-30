@@ -387,7 +387,7 @@
         /* --- TEXT GLOW EFFECTS FOR HEADINGS --- */
         .header-title {
             font-family: 'Great Vibes', cursive;
-            font-size: 3.5rem;
+            font-size: 3.6rem;
             color: var(--text-gold);
             text-align: center;
             font-weight: normal;
@@ -663,6 +663,8 @@
 </head>
 <body>
 
+    <div class="ambient-glow-core"></div>
+
     <div class="app-container">
         <div class="bg-glow-particles"></div>
 
@@ -823,7 +825,7 @@
         let currentInputCode = "";
 
         // --- DYNAMIC GLITTER & TARGETED STATIC HEARTS GENERATOR ---
-        function generateGlitterEffect() {
+        /*function generateGlitterEffect() {
             const generalGlitterLayer = document.querySelector('.glitter-layer');
             const keypadHeartsContainer = document.getElementById('keypadHeartsBackground');
             
@@ -869,7 +871,31 @@
             }
         }
         
-        generateGlitterEffect();
+        generateGlitterEffect();*/
+
+        function spawnBackgroundGlowHearts() {
+            const bodyNode = document.body;
+            const targetHeartCount = 15;
+
+            for (let i = 0; i < targetHeartCount; i++) {
+                const heartNode = document.createElement('div');
+                heartNode.className = 'bg-glow-heart';
+                heartNode.innerHTML = Math.random() > 0.5 ? '♥' : '💚';
+                
+                // Position across viewport boundaries
+                heartNode.style.left = `${Math.random() * 96}%`;
+                heartNode.style.top = `${Math.random() * 92}%`;
+                
+                // Randomize glow sizes & performance delays
+                heartNode.style.fontSize = `${Math.random() * 14 + 16}px`;
+                heartNode.style.animationDelay = `${Math.random() * 4}s`;
+                heartNode.style.animationDuration = `${Math.random() * 3 + 3}s`;
+                
+                bodyNode.appendChild(heartNode);
+            }
+        }
+        
+        spawnBackgroundGlowHearts();
 
         function updateIndicatorHearts() {
             const hearts = document.querySelectorAll('.indicator-heart');
