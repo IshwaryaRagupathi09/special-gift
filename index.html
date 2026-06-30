@@ -298,13 +298,27 @@
             z-index: 5;
         }
 
-        .showcase-matte {
+        /*.showcase-matte {
             width: 50%;
             height: 460px;
             border-radius: 20px;
             border: 3px solid #1c3d23;
             background-size: cover;
             background-position: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            position: relative;
+        }*/
+
+        .showcase-matte {
+            width: 50%;
+            height: 460px;
+            border-radius: 20px;
+            border: 3px solid #1c3d23;
+            /* CHANGED from cover to contain so the left/right sides never get clipped */
+            background-size: contain; 
+            background-repeat: no-repeat;
+            background-position: center center; 
+            background-color: rgba(0, 0, 0, 0.4); /* Adds a subtle dark backing for any empty space */
             box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             position: relative;
         }
@@ -453,8 +467,12 @@
             border: 2px solid rgba(255,255,255,0.4);
         }
 
+        /* FIXED: Keeps the vertical image perfectly centered and fully visible without cutting top or bottom */
         .card-column.col-red .photo-frame {
-            background-position: top center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-color: rgba(0, 0, 0, 0.2);
         }
 
         .paper-sheet-note {
