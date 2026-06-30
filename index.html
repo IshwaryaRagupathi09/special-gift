@@ -538,10 +538,21 @@
             50% { transform: scale(1.01); }
         }
 
+        #frame3View {
+            display: none; /* Default hidden */
+            width: 100%;
+            flex-grow: 1;
+            flex-direction: column;
+            justify-content: center; /* Vertically centers the image */
+            align-items: center;     /* Horizontally centers the image */
+        }
+        
+        /* Ensure the wrapper respects the centering */
         .image-wrapper {
             position: relative;
             width: 100%;
-            max-width: 480px;
+            max-width: 480px; /* Maintains your preferred width */
+            margin: 0 auto;   /* Extra insurance for horizontal centering */
         }
         
         .image-wrapper img { width: 100%; height: auto; }
@@ -781,18 +792,20 @@
         }
         
         function showAngryPanda() {
-            // Reuse the existing errorPandaView logic or create a specific one
+            // 1. Hide Frame 3
             document.getElementById('frame3View').classList.remove('active-view');
+            
+            // 2. Show the Error Page
             const errorView = document.getElementById('errorPandaView');
             errorView.classList.add('active-view');
             
-            // Update the error message for this specific case
+            // 3. Customize the content dynamically
             errorView.querySelector('.error-message-heading').innerText = "How dare you?!";
             errorView.querySelector('.error-message-desc').innerText = "You have to say yes to your birthday surprise! Try again.";
             
-            // Reset the retry button to go back to Frame 3 instead of Lockscreen
-            const btn = errorView.querySelector('.action-retry-btn');
-            btn.onclick = function() {
+            // 4. Reset the "Try Again" button to return to Frame 3 instead of the lockscreen
+            const retryBtn = errorView.querySelector('.action-retry-btn');
+            retryBtn.onclick = function() {
                 errorView.classList.remove('active-view');
                 document.getElementById('frame3View').classList.add('active-view');
             };
