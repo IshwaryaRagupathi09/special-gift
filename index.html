@@ -3,187 +3,345 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Surprise for Ennavl</title>
+    <title>Your 3 Surprises 💚</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Great+Vibes&family=Fredoka:wght@400;600&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-blue: #7fa9d8;
-            --bg-dark-green: #0a2f1d;
-            --bg-light-green: #14422b;
-            --love-pink: #ff4d79;
+            --bg-dark-green: #031106;
+            --outer-border: #122d17;
+            --accent-gold: #ebd397;
+            --gold-glow: rgba(235, 211, 151, 0.35);
+            --note-bg: #fff6e7;
+            
+            /* Card Column Bases */
+            --col-pink: #f7cbd1;
+            --col-purple: #d8c7eb;
+            --col-red: #f3b9be;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
-        body { background-color: #111; color: #fff; overflow-x: hidden; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
 
-        .frame {
-            display: none;
-            min-height: 100vh;
-            width: 100%;
+        body {
+            background-color: #0c0d0e;
+            color: #ffffff;
+            display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            position: relative;
-            padding: 20px;
+            min-height: 100vh;
+            font-family: 'Fredoka', sans-serif;
+            padding: 20px 0;
         }
 
-        .active { display: flex; }
+        /* App Mockup Wrapper mimicking Frame4 structure */
+        .app-container {
+            width: 100%;
+            max-width: 460px;
+            height: 880px;
+            background: linear-gradient(180deg, #041609 0%, #020b04 100%);
+            position: relative;
+            border-radius: 28px;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.95);
+            overflow: hidden;
+            border: 8px solid #161917;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px 14px;
+        }
 
-        /* FRAME 1: PASSCODE CODE */
-        #frame1 { background-color: var(--bg-blue); color: #333; }
-        .passcode-container { display: flex; background: #fff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-width: 700px; width: 100%; gap: 30px; }
-        .photo-holder { flex: 1; background: #f9f9f9; padding: 15px; border-radius: 10px; border: 1px solid #ddd; text-align: center; }
-        .photo-placeholder { background: #e0e0e0; height: 200px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; color: #666; overflow: hidden; position: relative; }
-        .photo-placeholder img { width: 100%; height: auto; display: block; border-radius: 8px; }
-        .keypad-side { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .code-display { display: flex; gap: 10px; margin-bottom: 20px; }
-        .code-dot { width: 40px; height: 40px; border: 2px solid #333; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; }
-        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-        .key { width: 50px; height: 50px; background: #f0f0f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: none; font-size: 16px; }
-        .key:active { background: #ddd; }
+        /* Subtle Sparkle Background Layer */
+        .bg-sparkles {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            background-image: radial-gradient(circle, rgba(235,211,151,0.15) 1px, transparent 1px);
+            background-size: 32px 32px;
+            opacity: 0.7;
+            z-index: 1;
+        }
 
-        /* FRAME 2 & 3: PANDAS & SURPRISE */
-        #frame2 { background: radial-gradient(circle, var(--bg-light-green), var(--bg-dark-green)); }
-        #frame3 { background: radial-gradient(circle, #1a4a30, #081e12); }
-        .card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 40px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.2); text-align: center; max-width: 500px; width: 100%; }
-        .btn { background: var(--love-pink); color: white; border: none; padding: 12px 35px; font-size: 18px; border-radius: 25px; cursor: pointer; margin-top: 25px; font-weight: bold; transition: 0.3s; }
-        .btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255, 77, 121, 0.4); }
-        .btn-no { background: #555; margin-left: 10px; }
+        /* --- HEADERS (Gold Glow Script) --- */
+        .dashboard-header {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            color: var(--accent-gold);
+            text-align: center;
+            text-shadow: 0 0 15px var(--gold-glow);
+            z-index: 5;
+            margin-bottom: 12px;
+            font-weight: normal;
+        }
 
-        /* FRAME 4: SCRAPBOOK GALLERY */
-        #frame4 { background: #18251c; padding-bottom: 100px; }
-        .scrapbook { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1000px; width: 100%; height: 100%; overflow: hidden; position: relative;}
-        .scrapbook img { width: 100%; height: auto; display: block; border-radius: 8px; }
-        @media (max-width: 768px) { .scrapbook { grid-template-columns: 1fr; } }
-        .photo-placeholder { background: #e0e0e0; height: 100px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; color: #666; overflow: hidden; position: relative; }
-        .photo-placeholder img { width: 100%; height: auto; display: block; border-radius: 8px; }
-        .column { background: #fff; color: #333; border-radius: 15px; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); text-align: center; }
-        .column-title { font-weight: bold; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-size: 14px; }
-        .col-1 { border-top: 8px solid #ff9999; }
-        .col-2 { border-top: 8px solid #cc99ff; }
-        .col-3 { border-top: 8px solid #ff6666; }
-        .scrapbook-img { background: #e0e0e0; height: 250px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #555; margin-bottom: 15px; font-size: 14px; }
-        .letter { font-style: italic; background: #fff9e6; padding: 15px; border-radius: 8px; font-size: 14px; line-height: 1.5; border: 1px dashed #ddcc99; }
+        .dashboard-footer-motto {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            text-align: center;
+            text-shadow: 0 0 12px var(--gold-glow);
+            z-index: 5;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-weight: normal;
+        }
 
-        /* MUSIC PLAYER */
-        .music-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #0b140e; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #222; z-index: 100; }
-        .track-info { display: flex; flex-direction: column; }
-        .track-title { font-weight: bold; color: #4caf50; font-size: 14px; }
-        .track-sub { font-size: 12px; color: #aaa; }
+        /* --- GRID CONTAINER --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: 100%;
+            height: 610px;
+            z-index: 5;
+        }
+
+        /* --- INDIVIDUAL COLUMN CARDS --- */
+        .dashboard-panel-column {
+            border-radius: 20px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.15), 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        .panel-pink { background-color: var(--col-pink); }
+        .panel-purple { background-color: var(--col-purple); }
+        .panel-red { background-color: var(--col-red); }
+
+        /* Cute Ribbon/Bow Accent at top */
+        .column-bow-accent {
+            font-size: 1.4rem;
+            position: absolute;
+            top: -14px;
+            z-index: 10;
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.2));
+        }
+
+        .column-label {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .panel-pink .column-label { color: #883b43; }
+        .panel-purple .column-label { color: #523b70; }
+        .panel-red .column-label { color: #913c45; }
+
+        /* --- INNER IMAGE FRAMES --- */
+        .panel-photo-frame {
+            width: 100%;
+            height: 195px;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            margin-bottom: 8px;
+            border: 2px solid rgba(255,255,255,0.4);
+        }
+
+        /* --- REALISTIC PAPER NOTES --- */
+        .panel-letter-sheet {
+            background-color: var(--note-bg);
+            color: #382c1e;
+            width: 100%;
+            border-radius: 10px;
+            padding: 10px 8px;
+            font-family: 'Caveat', cursive;
+            font-size: 1.15rem;
+            line-height: 1.25;
+            flex-grow: 1;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-bottom: 2px solid #ebd9c0;
+        }
+
+        .panel-letter-sheet p {
+            text-align: center;
+            word-wrap: break-word;
+        }
+
+        /* Tiny cartoon character badges at the bottom of the letters */
+        .mini-character-badge {
+            font-size: 1.2rem;
+            text-align: center;
+            margin-top: auto;
+            padding-top: 4px;
+        }
+
+        /* --- SLEEK MUSIC CONTROLLER PLAYER --- */
+        .music-footer-bar {
+            width: 100%;
+            height: 64px;
+            background: rgba(4, 15, 7, 0.85);
+            border: 1px solid #14351b;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 10;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .music-identity-side {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 50%;
+        }
+
+        .vinyl-disc-widget {
+            width: 36px;
+            height: 36px;
+            background: radial-gradient(circle, #222 25%, #050505 26%, #111 70%, #444 100%);
+            border-radius: 50%;
+            border: 1.5px solid #285e33;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: rotateVinyl 4s linear infinite;
+        }
+
+        .vinyl-core-center {
+            width: 10px;
+            height: 10px;
+            background-color: #79f795;
+            border-radius: 50%;
+        }
+
+        @keyframes rotateVinyl {
+            100% { transform: rotate(360deg); }
+        }
+
+        .track-meta {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .track-label-title { 
+            font-size: 0.78rem; 
+            font-weight: 600; 
+            color: #ffffff;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        
+        .track-label-status { 
+            font-size: 0.65rem; 
+            color: #61b373; 
+            margin-top: 1px; 
+        }
+
+        .music-controls-side {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #aae0b8;
+            font-size: 0.8rem;
+        }
+
+        .play-pause-toggle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1.5px solid #61b373;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .timeline-stamp {
+            font-size: 0.7rem; 
+            color: #598f65;
+        }
     </style>
 </head>
 <body>
 
-    <div id="frame1" class="frame active">
-        <div class="passcode-container">
-            <div class="photo-holder">
-                <div class="photo-placeholder"><img src="Image1.jpg.jpeg" alt="Childhood Dog Photo"></div>
-                <div class="photo-placeholder"><img src="Image2.jpg.jpeg" alt="Childhood Dog Photo"></div>
-                <p style="font-size: 12px; color:#666;">Unlock your memory vault</p>
-            </div>
-            <div class="keypad-side">
-                <h2 style="margin-bottom: 20px; text-align:center;">Enter Passcode</h2>
-                <div class="code-display">
-                    <div class="code-dot" id="dot0"></div>
-                    <div class="code-dot" id="dot1"></div>
-                    <div class="code-dot" id="dot2"></div>
-                    <div class="code-dot" id="dot3"></div>
-                </div>
-                <div class="keypad">
-                    <button class="key" onclick="press(2)">2</button>
-                    <button class="key" onclick="press(4)">4</button>
-                    <button class="key" onclick="press(7)">7</button>
-                    <button class="key" onclick="press(1)">1</button>
-                    <button class="key" onclick="press(9)">9</button>
-                    <button class="key" onclick="press(0)">0</button>
-                </div>
-                <p style="margin-top: 15px; font-size:12px; color:#e06666;" id="lock-msg">Hint: Use the active keys!</p>
-            </div>
-        </div>
-    </div>
+    <div class="app-container">
+        <div class="bg-sparkles"></div>
 
-    <div id="frame2" class="frame">
-        <div class="card">
-            <h1 style="color: #62c462; font-size: 2.5rem; margin-bottom: 15px;">Happy Birthday<br>Ennavl ❤️</h1>
-            <div style="background: rgba(255,255,255,0.1); height: 200px; border-radius: 15px; display:flex; justify-content:center; align-items:center; margin-bottom: 20px; font-weight:bold;">
-                [ 🐼 🐼 🐼 🎂 3 Pandas Celebration Image ]
-            </div>
-            <p>Make a wish and step inside your special day.</p>
-            <button class="btn" onclick="nextFrame(2, 3)">Blow the Candle 🎂</button>
-        </div>
-    </div>
-
-    <div id="frame3" class="frame">
-        <div class="card">
-            <div style="font-size: 50px; margin-bottom: 10px;">🐻</div>
-            <h2 style="font-size: 2rem; margin-bottom: 20px;">Are you ready for your surprise?</h2>
-            <button class="btn" onclick="nextFrame(3, 4)">❤️ YES</button>
-            <button class="btn btn-no" onclick="alert('Wrong choice! 😉 Click YES!')">NO</button>
-        </div>
-    </div>
-
-    <div id="frame4" class="frame">
-        <h1 style="margin-bottom: 40px; font-size: 2.5rem; text-align:center; color:#ff4d79;">✨ Forever & Always ✨</h1>
+        <h2 class="dashboard-header">♡ Your 3 Surprises ♡</h2>
         
-        <div class="scrapbook">
-            <div class="column col-1">
-                <div class="column-title">1. For You</div>
-                <div class="scrapbook-img"><img src="Image5.jpg.webp" alt="Together Photo"></div>
-                <div class="letter">
-                    <strong>Happy Birthday Ennavl ❤️</strong><br><br>
-                    You mean the absolute world to me! This day belongs completely to you.
+        <div class="dashboard-grid">
+            
+            <div class="dashboard-panel-column panel-pink">
+                <span class="column-bow-accent">🎀</span>
+                <div class="column-label">1. For You</div>
+                <div class="panel-photo-frame" style="background-image: url('https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=500&auto=format&fit=crop');"></div>
+                <div class="panel-letter-sheet">
+                    <p>
+                        <b style="font-size:1.1rem; color:#883b43; display:block; margin-bottom:6px;">Happy Birthday Ennavl ❤️</b>
+                        You mean the absolute world to me! This day belongs completely to you.
+                    </p>
+                    <div class="mini-character-badge">🐻</div>
                 </div>
             </div>
 
-            <div class="column col-2">
-                <div class="column-title">2. Our Memories</div>
-                <div class="photo-placeholder"><img src="Image6.jpg.jpeg" alt="Beach Photo"></div>
-                <div class="letter">
-                    In you, I found my today, and all of my tomorrows. Thank you for being my happiness, my safe place, and my everything.
+            <div class="dashboard-panel-column panel-purple">
+                <span class="column-bow-accent">💝</span>
+                <div class="column-label">2. Our Memories</div>
+                <div class="panel-photo-frame" style="background-image: url('https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=500&auto=format&fit=crop');"></div>
+                <div class="panel-letter-sheet">
+                    <p style="font-size: 1.05rem;">
+                        In you, I found my today, and all of my tomorrows. Thank you for being my happiness 🤗, my safe place, and my everything 💚✨. Happy birthday Ennavl! ❤️
+                    </p>
+                    <div class="mini-character-badge">🐱</div>
                 </div>
             </div>
 
-            <div class="column col-3">
-                <div class="column-title">3. My Heart</div>
-                <div class="scrapbook-img"><img src="Image3.jpg.jpeg" alt="Hand holding Photo"></div>
-                <div class="letter" style="background:#fff0f5;">
-                    <strong>I Love You<br>Forever & Always ❤️</strong><br><br>
-                    Hand in hand, we can take on anything the universe brings.
+            <div class="dashboard-panel-column panel-red">
+                <span class="column-bow-accent">🎁</span>
+                <div class="column-label">3. My Heart</div>
+                <div class="panel-photo-frame" style="background-image: url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=500&auto=format&fit=crop');"></div>
+                <div class="panel-letter-sheet" style="background-color: #fff0f1; justify-content: center; align-items: center; gap: 8px;">
+                    <div style="font-size: 2.2rem; margin-top: -5px;">🐻‍❄️❤️🐻</div>
+                    <p style="font-weight: bold; color: #913c45; font-size: 1.25rem; text-align: center; line-height: 1.2;">
+                        I Love You <br>Forever & Always ❤️
+                    </p>
                 </div>
+            </div>
+
+        </div>
+
+        <h3 class="dashboard-footer-motto">♡ Forever & Always ♡</h3>
+
+        <div class="music-footer-bar">
+            <div class="music-identity-side">
+                <div class="vinyl-disc-widget">
+                    <div class="vinyl-core-center"></div>
+                </div>
+                <div class="track-meta">
+                    <p class="track-label-title">Uyire Uyire - Amaran</p>
+                    <p class="track-label-status">Playing...</p>
+                </div>
+            </div>
+            <div class="music-controls-side">
+                <span>⏮</span>
+                <div class="play-pause-toggle">⏸</div>
+                <span>⏭</span>
+                <span class="timeline-stamp">00:45 / 04:48</span>
             </div>
         </div>
 
-        <div class="music-bar">
-            <div class="track-info">
-                <span class="track-title">🎵 Uyire Uyire</span>
-                <span class="track-sub">Amaran • Playing...</span>
-            </div>
-            <div style="font-size: 20px; color: #4caf50;">▶️ ═══🔘═══ 00:45 / 04:48</div>
-        </div>
     </div>
 
-    <script>
-        // Passcode Logic
-        const targetCode = [2, 4, 4, 0]; // Simulating an arbitrary 4-digit key pattern
-        let inputCode = [];
-
-        function press(num) {
-            if(inputCode.length < 4) {
-                inputCode.push(num);
-                document.getElementById(`dot${inputCode.length-1}`).innerText = num === 0 ? '*' : num;
-            }
-            if(inputCode.length === 4) {
-                setTimeout(() => {
-                    // Instantly unlocking to proceed to show layout
-                    nextFrame(1, 2);
-                }, 400);
-            }
-        }
-
-        function nextFrame(current, next) {
-            document.getElementById(`frame${current}`).classList.remove('active');
-            document.getElementById(`frame${next}`).classList.add('active');
-            window.scrollTo(0,0);
-        }
-    </script>
 </body>
 </html>
