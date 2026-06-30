@@ -3,23 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your 3 Surprises 💚</title>
+    <title>Your Birthday Surprise 💚</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Great+Vibes&family=Fredoka:wght@400;600&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Great+Vibes&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-gradient-top: #051609;
-            --bg-gradient-bottom: #020904;
+            --bg-dark-green: #041609;
+            --bg-deep-black: #020904;
+            --neon-green-glow: rgba(121, 247, 149, 0.4);
             --text-gold: #e2c067;
             --gold-glow: rgba(226, 192, 103, 0.4);
             
-            /* Columns exact background shades from reference */
             --card-pink: #eeb3ba;
             --card-purple: #cbb9df;
             --card-red: #e9a6ac;
-            
-            /* Paper Note Background */
             --paper-bg: #fff5e6;
         }
 
@@ -39,15 +37,15 @@
             min-height: 100vh;
             font-family: 'Fredoka', sans-serif;
             padding: 20px;
+            overflow-x: hidden;
         }
 
-        /* --- RESPONSIVE APP CONTAINER --- */
+        /* --- STAGE SYSTEM WRAPPER --- */
         .app-container {
             width: 100%;
-            /* Laptop / Widescreen View defaults */
             max-width: 1100px; 
             min-height: 850px;
-            background: linear-gradient(180deg, var(--bg-gradient-top) 0%, var(--bg-gradient-bottom) 100%);
+            background: linear-gradient(180deg, var(--bg-dark-green) 0%, var(--bg-deep-black) 100%);
             position: relative;
             border-radius: 28px;
             box-shadow: 0 25px 60px rgba(0,0,0,0.95);
@@ -57,21 +55,227 @@
             flex-direction: column;
             justify-content: space-between;
             padding: 30px 24px 24px 24px;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
         }
 
-        /* Decorative Sparkle Layer */
+        /* Ambient floating spark background layer */
         .bg-glow-particles {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
-            background-image: radial-gradient(circle, rgba(226,192,103,0.12) 1.5px, transparent 1.5px);
-            background-size: 28px 28px;
+            background-image: radial-gradient(circle, rgba(121, 247, 149, 0.1) 1.5px, transparent 1.5px);
+            background-size: 32px 32px;
             opacity: 0.85;
             z-index: 1;
         }
 
-        /* --- HEADERS --- */
+        /* View switching utilities */
+        .frame-view {
+            display: none;
+            width: 100%;
+            flex-grow: 1;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 5;
+        }
+        .frame-view.active-view {
+            display: flex;
+        }
+
+        /* =========================================
+           FRAME 1: LOCK SCREEN KEYPAD STYLE
+           ========================================= */
+        .lockscreen-split-layout {
+            display: flex;
+            gap: 40px;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            margin: 20px 0;
+        }
+
+        /* Left Side: Keypad Panel */
+        .keypad-wrapper-side {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .welcome-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.8rem;
+            color: #bbf7c5;
+            text-shadow: 0 0 20px var(--neon-green-glow);
+            font-weight: normal;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .password-instructions {
+            font-size: 1.05rem;
+            color: #d2edd6;
+            text-align: center;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        /* Indicator Hearts tracking typing */
+        .indicator-hearts-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .indicator-heart {
+            font-size: 1.6rem;
+            color: transparent;
+            -webkit-text-stroke: 2px #79f795;
+            text-shadow: 0 0 5px rgba(121,247,149,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .indicator-heart.filled {
+            color: #79f795;
+            text-shadow: 0 0 15px #79f795;
+        }
+
+        /* Grid Setup */
+        .heart-keypad-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px 24px;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .keypad-btn {
+            background: transparent;
+            border: none;
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.1s ease;
+        }
+        .keypad-btn:active {
+            transform: scale(0.9);
+        }
+
+        /* Custom drawn glossy green heart shapes using pseudo-elements */
+        .heart-shape-bg {
+            position: absolute;
+            width: 75%;
+            height: 75%;
+            background: linear-gradient(135deg, #184b24 0%, #0c2b14 100%);
+            box-shadow: inset 0 4px 6px rgba(255,255,255,0.15), 0 0 12px rgba(24,75,36,0.6);
+            border-radius: 50% 50% 0 0;
+            transform: rotate(-45deg);
+            top: 10%;
+            border: 1px solid #3fa857;
+        }
+        .heart-shape-bg::before {
+            content: '';
+            position: absolute;
+            width: 100%; height: 100%;
+            background: inherit;
+            border-radius: 50%;
+            top: -50%; left: 0;
+            border-top: 1px solid #3fa857;
+            border-left: 1px solid #3fa857;
+        }
+        .heart-shape-bg::after {
+            content: '';
+            position: absolute;
+            width: 100%; height: 100%;
+            background: inherit;
+            border-radius: 50%;
+            top: 0; left: 50%;
+            border-top: 1px solid #3fa857;
+            border-right: 1px solid #3fa857;
+        }
+
+        /* Action-specific button styling override */
+        .keypad-btn.action-clear .heart-shape-bg {
+            background: linear-gradient(135deg, #332023 0%, #1c1012 100%);
+            border-color: #7c3b43;
+            box-shadow: 0 0 10px rgba(124,59,67,0.4);
+        }
+        .keypad-btn.action-clear .heart-shape-bg::before,
+        .keypad-btn.action-clear .heart-shape-bg::after {
+            border-color: #7c3b43;
+        }
+
+        .btn-digit-val {
+            position: relative;
+            z-index: 5;
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .action-enter-bar {
+            width: 100%;
+            height: 52px;
+            border: 2px solid #5aa86a;
+            background: rgba(121, 247, 149, 0.05);
+            border-radius: 26px;
+            color: #bbf7c5;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 0 15px rgba(90,168,106,0.2);
+            transition: all 0.2s ease;
+        }
+        .action-enter-bar:hover {
+            background: rgba(121, 247, 149, 0.15);
+            box-shadow: 0 0 25px rgba(121,247,149,0.4);
+            color: #ffffff;
+        }
+
+        /* Right Side: Lockscreen Side Showcase Images */
+        .lockscreen-showcase-side {
+            display: flex;
+            gap: 20px;
+            flex-grow: 1;
+            justify-content: center;
+            max-width: 580px;
+        }
+
+        .showcase-matte {
+            width: 50%;
+            height: 460px;
+            border-radius: 20px;
+            border: 3px solid #1c3d23;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            position: relative;
+        }
+        .showcase-matte::after {
+            content: '❤️';
+            position: absolute;
+            bottom: 15px; right: 15px;
+            font-size: 1.5rem;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+        }
+
+        /* =========================================
+           FRAME 4: SURPRISES DASHBOARD VIEW
+           ========================================= */
         .header-title {
             font-family: 'Great Vibes', cursive;
             font-size: 3.5rem;
@@ -79,7 +283,6 @@
             text-align: center;
             text-shadow: 0 0 15px var(--gold-glow);
             font-weight: normal;
-            z-index: 5;
             margin-bottom: 25px;
         }
 
@@ -90,22 +293,18 @@
             text-align: center;
             text-shadow: 0 0 12px var(--gold-glow);
             font-weight: normal;
-            z-index: 5;
             margin-top: 25px;
             margin-bottom: 20px;
         }
 
-        /* --- DASHBOARD GRID ARCHITECTURE --- */
         .surprises-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             width: 100%;
             flex-grow: 1;
-            z-index: 5;
         }
 
-        /* --- INDIVIDUAL COLUMN CARDS --- */
         .card-column {
             border-radius: 20px;
             padding: 12px;
@@ -121,7 +320,6 @@
         .col-purple { background-color: var(--card-purple); }
         .col-red { background-color: var(--card-red); }
 
-        /* Ribbon/Bow Accent */
         .ribbon-bow {
             position: absolute;
             top: -15px;
@@ -131,7 +329,6 @@
         }
 
         .column-number-label {
-            font-family: 'Fredoka', sans-serif;
             font-size: 0.95rem;
             font-weight: 600;
             margin-top: 5px;
@@ -141,7 +338,6 @@
         .col-purple .column-number-label { color: #4b3663; }
         .col-red .column-number-label { color: #88343e; }
 
-        /* --- PHOTO MATTES --- */
         .photo-frame {
             width: 100%;
             height: 240px;
@@ -153,7 +349,6 @@
             border: 2px solid rgba(255,255,255,0.4);
         }
 
-        /* --- HANDWRITTEN PAPER SHEET NOTES --- */
         .paper-sheet-note {
             background-color: var(--paper-bg);
             color: #302418;
@@ -183,7 +378,9 @@
             padding-top: 8px;
         }
 
-        /* --- AUDIO FOOTER BAR --- */
+        /* =========================================
+           GLOBAL MUSIC FOOTER BAR MODULE
+           ========================================= */
         .music-footer-player {
             width: 100%;
             height: 70px;
@@ -277,81 +474,51 @@
         }
 
         /* =========================================
-           MOBILE RESPONSIVITY RULES (W&H scaling)
-           =========================================
-        */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
+           ADAPTIVE VIEWPORT MEDIA QUERIES (Mobile View Setup)
+           ========================================= */
+        @media (max-width: 860px) {
+            .lockscreen-split-layout {
+                flex-direction: column-reverse;
+                gap: 25px;
             }
+            .lockscreen-showcase-side {
+                width: 100%;
+                max-width: 400px;
+            }
+            .showcase-matte {
+                height: 220px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
             .app-container {
                 max-width: 440px;
-                height: 850px;
+                height: auto;
+                min-height: 850px;
                 padding: 18px 14px 14px 14px;
             }
-            .header-title {
-                font-size: 2.6rem;
-                margin-bottom: 12px;
-            }
-            .footer-motto {
-                font-size: 2.3rem;
-                margin-top: 12px;
-                margin-bottom: 12px;
-            }
+            .welcome-title { font-size: 2.8rem; }
+            .header-title { font-size: 2.6rem; margin-bottom: 12px; }
+            .footer-motto { font-size: 2.3rem; margin-top: 12px; margin-bottom: 12px; }
+            
             .surprises-grid {
-                gap: 10px;
-                height: 580px;
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
-            .card-column {
-                padding: 6px;
-                min-height: auto;
-            }
-            .ribbon-bow {
-                font-size: 1.4rem;
-                top: -12px;
-            }
-            .column-number-label {
-                font-size: 0.78rem;
-                margin-bottom: 6px;
-            }
-            .photo-frame {
-                height: 175px;
-                margin-bottom: 6px;
-            }
-            .paper-sheet-note {
-                font-size: 1.1rem;
-                padding: 8px 5px;
-            }
-            .mini-mascot-footer {
-                font-size: 1.2rem;
-            }
-            .music-footer-player {
-                height: 62px;
-                padding: 0 14px;
-                margin-top: 10px;
-            }
-            .spinning-vinyl {
-                width: 34px;
-                height: 34px;
-            }
-            .track-title-text {
-                font-size: 0.78rem;
-            }
-            .track-status-text {
-                font-size: 0.65rem;
-            }
-            .audio-controls-box {
-                gap: 10px;
-                font-size: 0.85rem;
-            }
-            .circle-toggle-btn {
-                width: 28px;
-                height: 28px;
-                font-size: 0.7rem;
-            }
-            .timeline-duration {
-                font-size: 0.65rem;
-            }
+            .card-column { padding: 12px; min-height: auto; }
+            .ribbon-bow { font-size: 1.6rem; top: -14px; }
+            .column-number-label { font-size: 0.85rem; margin-bottom: 8px; }
+            .photo-frame { height: 210px; margin-bottom: 10px; }
+            .paper-sheet-note { font-size: 1.25rem; padding: 12px; }
+            
+            .music-footer-player { height: 62px; padding: 0 14px; margin-top: 15px; }
+            .spinning-vinyl { width: 34px; height: 34px; }
+            .track-title-text { font-size: 0.78rem; }
+            .track-status-text { font-size: 0.65rem; }
+            .audio-controls-box { gap: 10px; font-size: 0.85rem; }
+            .circle-toggle-btn { width: 28px; height: 28px; font-size: 0.7rem; }
+            .timeline-duration { font-size: 0.65rem; }
         }
     </style>
 </head>
@@ -360,50 +527,90 @@
     <div class="app-container">
         <div class="bg-glow-particles"></div>
 
-        <h1 class="header-title">♡ Your 3 Surprises ♡</h1>
-        
-        <div class="surprises-grid">
-            
-            <div class="card-column col-pink">
-                <span class="ribbon-bow">🎀</span>
-                <div class="column-number-label">1. For You</div>
-                <div class="photo-frame" style="background-image: url('Image5.jpg.webp');"></div>
-                <div class="paper-sheet-note">
-                    <p>
-                        <b style="font-size:1.15em; color:#7a353d; display:block; margin-bottom:4px;">Happy Birthday Ennavl ❤️</b>
-                        You mean the world to me!
-                    </p>
-                    <div class="mini-mascot-footer">🐻</div>
-                </div>
-            </div>
+        <div id="lockscreenView" class="frame-view active-view">
+            <div class="lockscreen-split-layout">
+                
+                <div class="keypad-wrapper-side">
+                    <h1 class="welcome-title">Welcome ♡</h1>
+                    <p class="password-instructions">Enter the password<br>to unlock your surprise</p>
+                    
+                    <div class="indicator-hearts-row">
+                        <span class="indicator-heart">♥</span>
+                        <span class="indicator-heart">♥</span>
+                        <span class="indicator-heart">♥</span>
+                        <span class="indicator-heart">♥</span>
+                    </div>
 
-            <div class="card-column col-purple">
-                <span class="ribbon-bow">💝</span>
-                <div class="column-number-label">2. Our Memories</div>
-                <div class="photo-frame" style="background-image: url('Image6.jpg.jpeg');"></div>
-                <div class="paper-sheet-note">
-                    <p>
-                        In you, I found my today and all of my tomorrow... thankyou for being my happiness 😊, my safe place and my everything 💚🤗💋 happy birthday Ennavl! ❤️
-                    </p>
-                    <div class="mini-mascot-footer">🐻❤️</div>
-                </div>
-            </div>
+                    <div class="heart-keypad-grid">
+                        <button class="keypad-btn" onclick="pressDigit('1')"><div class="heart-shape-bg"></div><span class="btn-digit-val">1</span></button>
+                        <button class="keypad-btn" onclick="pressDigit('2')"><div class="heart-shape-bg"></div><span class="btn-digit-val">2</span></button>
+                        <button class="keypad-btn" onclick="pressDigit('3')"><div class="heart-shape-bg"></div><span class="btn-digit-val">3</span></button>
+                        <button class="keypad-btn" onclick="pressDigit('4')"><div class="heart-shape-bg"></div><span class="btn-digit-val">4</span></button>
+                        <button class="keypad-btn" onclick="pressDigit('5')"><div class="heart-shape-bg"></div><span class="btn-digit-val">5</span></button>
+                        <button class="keypad-btn" onclick="pressDigit('6')"><div class="heart-shape-bg"></div><span class="btn-digit-val">6</span></button>
+                        <button class="keypad-btn" onclick="pressDigit('7')"><div class="heart-shape-bg"></div><span class="btn-digit-val">7</span></button>
+                        <button class="keypad-btn" onclick="pressDigit('8')"><div class="heart-shape-bg"></div><span class="btn-digit-val">8</span></button>
+                        <button class="keypad-btn" onclick="pressDigit('9')"><div class="heart-shape-bg"></div><span class="btn-digit-val">9</span></button>
+                        <div style="visibility: hidden;"></div>
+                        <button class="keypad-btn" onclick="pressDigit('0')"><div class="heart-shape-bg"></div><span class="btn-digit-val">0</span></button>
+                        <button class="keypad-btn action-clear" onclick="clearDigits()"><div class="heart-shape-bg"></div><span class="btn-digit-val" style="font-size: 1.2rem;">⌫</span></button>
+                    </div>
 
-            <div class="card-column col-red">
-                <span class="ribbon-bow">🎁</span>
-                <div class="column-number-label">3. My Heart</div>
-                <div class="photo-frame" style="background-image: url('Image3.jpg.jpeg');"></div> 
-                <div class="paper-sheet-note" style="justify-content: center; gap: 12px;">
-                    <div style="font-size: 2.2rem;">🐻‍❄️❤️🐻</div>
-                    <p style="font-weight: bold; color: #88343e; font-size: 1.25em; line-height: 1.25;">
-                        I Love You <br>Forever & Always ❤️
-                    </p>
+                    <button class="action-enter-bar" onclick="validatePassword()">♥ ENTER ♥</button>
                 </div>
-            </div>
 
+                <div class="lockscreen-showcase-side">
+                    <div class="showcase-matte" style="background-image: url('img1.jpg');"></div>
+                    <div class="showcase-matte" style="background-image: url('img2.jpg');"></div>
+                </div>
+
+            </div>
         </div>
 
-        <h2 class="footer-motto">♡ Forever & Always ♡</h2>
+        <div id="dashboardView" class="frame-view">
+            <h1 class="header-title">♡ Your 3 Surprises ♡</h1>
+            
+            <div class="surprises-grid">
+                <div class="card-column col-pink">
+                    <span class="ribbon-bow">🎀</span>
+                    <div class="column-number-label">1. For You</div>
+                    <div class="photo-frame" style="background-image: url('img1.jpg');"></div>
+                    <div class="paper-sheet-note">
+                        <p>
+                            <b style="font-size:1.15em; color:#7a353d; display:block; margin-bottom:4px;">Happy Birthday Ennavl ❤️</b>
+                            You mean the world to me!
+                        </p>
+                        <div class="mini-mascot-footer">🐻</div>
+                    </div>
+                </div>
+
+                <div class="card-column col-purple">
+                    <span class="ribbon-bow">💝</span>
+                    <div class="column-number-label">2. Our Memories</div>
+                    <div class="photo-frame" style="background-image: url('img2.jpg');"></div>
+                    <div class="paper-sheet-note">
+                        <p>
+                            In you, I found my today and all of my tomorrow... thankyou for being my happiness 😊, my safe place and my everything 💚🤗💋 happy birthday Ennavl! ❤️
+                        </p>
+                        <div class="mini-mascot-footer">🐻❤️</div>
+                    </div>
+                </div>
+
+                <div class="card-column col-red">
+                    <span class="ribbon-bow">🎁</span>
+                    <div class="column-number-label">3. My Heart</div>
+                    <div class="photo-frame" style="background-image: url('img3.jpg');"></div>
+                    <div class="paper-sheet-note" style="justify-content: center; gap: 12px;">
+                        <div style="font-size: 2.2rem;">🐻‍❄️❤️🐻</div>
+                        <p style="font-weight: bold; color: #88343e; font-size: 1.25em; line-height: 1.25;">
+                            I Love You <br>Forever & Always ❤️
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="footer-motto">♡ Forever & Always ♡</h2>
+        </div>
 
         <div class="music-footer-player">
             <div class="audio-identity-box">
@@ -425,5 +632,46 @@
 
     </div>
 
+    <script>
+        // Change '1234' to your own selected password code combination string
+        const CORRECT_PASSWORD = '1234';
+        let currentInputCode = "";
+
+        function updateIndicatorHearts() {
+            const hearts = document.querySelectorAll('.indicator-heart');
+            hearts.forEach((heart, idx) => {
+                if (idx < currentInputCode.length) {
+                    heart.classList.add('filled');
+                } else {
+                    heart.classList.remove('filled');
+                }
+            });
+        }
+
+        function pressDigit(digitValue) {
+            if (currentInputCode.length < 4) {
+                currentInputCode += digitValue;
+                updateIndicatorHearts();
+            }
+        }
+
+        function clearDigits() {
+            currentInputCode = currentInputCode.slice(0, -1);
+            updateIndicatorHearts();
+        }
+
+        function validatePassword() {
+            if (currentInputCode === CORRECT_PASSWORD) {
+                // Switch Panels instantly and smoothly
+                document.getElementById('lockscreenView').classList.remove('active-view');
+                document.getElementById('dashboardView').classList.add('active-view');
+            } else {
+                // Flash alert on mistake and wipe string data clean
+                alert("Incorrect code! Please try again 🥺");
+                currentInputCode = "";
+                updateIndicatorHearts();
+            }
+        }
+    </script>
 </body>
 </html>
