@@ -52,7 +52,10 @@
         /* FRAME 4: SCRAPBOOK GALLERY */
         #frame4 { background: #18251c; padding-bottom: 100px; }
         .scrapbook { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1000px; width: 100%;  overflow: hidden; position: relative;}
+        .scrapbook img { width: 100%; height: auto; display: block; border-radius: 8px; }
         @media (max-width: 768px) { .scrapbook { grid-template-columns: 1fr; } }
+        .photo-placeholder { background: #e0e0e0; height: 200px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; color: #666; overflow: hidden; position: relative; }
+        .photo-placeholder img { width: 100%; height: auto; display: block; border-radius: 8px; }
         .column { background: #fff; color: #333; border-radius: 15px; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); text-align: center; }
         .column-title { font-weight: bold; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-size: 14px; }
         .col-1 { border-top: 8px solid #ff9999; }
