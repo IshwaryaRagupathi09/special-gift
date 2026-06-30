@@ -639,8 +639,8 @@
             </div>
         </div>
 
-        <div id="cakeView" class="frame-view active-view"> <!-- Initially active -->
-            <div class="interactive-container" onclick="proceedToFrame3()">
+        <div id="cakeView" class="frame-view"> 
+            <div class="interactive-container" onclick="switchToFrame('frame3View')">
                 <img src="Frame2.jpeg" alt="Blow the candle">
             </div>
         </div>
@@ -648,7 +648,7 @@
         <div id="frame3View" class="frame-view">
             <div class="image-wrapper">
                 <img src="Frame3.jpeg" alt="Surprise Choice">
-                <div class="hotspot-yes" onclick="showDashboard()"></div>
+                <div class="hotspot-yes" onclick="switchToFrame('dashboardView')"></div>
                 <div class="hotspot-no" onclick="showAngryPanda()"></div>
             </div>
         </div>
@@ -822,6 +822,22 @@
                 errorView.classList.remove('active-view');
                 document.getElementById('frame3View').classList.add('active-view');
             };
+        }
+
+        function switchToFrame(frameId) {
+            // 1. Find all frame views
+            const allFrames = document.querySelectorAll('.frame-view');
+            
+            // 2. Hide everything
+            allFrames.forEach(frame => {
+                frame.classList.remove('active-view');
+            });
+            
+            // 3. Show only the requested one
+            const target = document.getElementById(frameId);
+            if (target) {
+                target.classList.add('active-view');
+            }
         }
 
         function returnToKeypad() {
