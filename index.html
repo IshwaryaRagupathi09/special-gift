@@ -453,6 +453,10 @@
             border: 2px solid rgba(255,255,255,0.4);
         }
 
+        .card-column.col-red .photo-frame {
+            background-position: top center;
+        }
+
         .paper-sheet-note {
             background-color: var(--paper-bg);
             color: #302418;
@@ -535,8 +539,15 @@
         /* =========================================
            ADAPTIVE VIEWPORT MEDIA RESPONSIVITY RULES
            ========================================= */
-        @media (max-width: 860px) {
+       /* @media (max-width: 860px) {
             .lockscreen-split-layout { flex-direction: column-reverse; gap: 25px; }
+            .lockscreen-showcase-side { width: 100%; max-width: 400px; }
+            .showcase-matte { height: 220px; }
+        }*/
+
+        @media (max-width: 860px) {
+            /* FIXED: Clean column alignment to prevent frame drift or left-chopping issues */
+            .lockscreen-split-layout { flex-direction: column; gap: 25px; align-items: center; }
             .lockscreen-showcase-side { width: 100%; max-width: 400px; }
             .showcase-matte { height: 220px; }
         }
