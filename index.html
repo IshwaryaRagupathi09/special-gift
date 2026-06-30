@@ -11,7 +11,7 @@
         :root {
             --bg-dark-green: #041609;
             --bg-deep-black: #020904;
-            --neon-green-glow: rgba(121, 247, 149, 0.4);
+            --neon-green-glow: rgba(121, 247, 149, 0.45);
             --text-gold: #e2c067;
             --gold-glow: rgba(226, 192, 103, 0.4);
             
@@ -40,7 +40,7 @@
             overflow-x: hidden;
         }
 
-        /* --- STAGE SYSTEM WRAPPER --- */
+        /* --- MAIN RESPONSIVE WINDOW APP WRAPPER --- */
         .app-container {
             width: 100%;
             max-width: 1100px; 
@@ -58,18 +58,18 @@
             transition: all 0.4s ease;
         }
 
-        /* Ambient floating spark background layer */
+        /* Ambient background base texture */
         .bg-glow-particles {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
-            background-image: radial-gradient(circle, rgba(121, 247, 149, 0.1) 1.5px, transparent 1.5px);
+            background-image: radial-gradient(circle, rgba(121, 247, 149, 0.08) 1.5px, transparent 1.5px);
             background-size: 32px 32px;
             opacity: 0.85;
             z-index: 1;
         }
 
-        /* View switching utilities */
+        /* View manager classes */
         .frame-view {
             display: none;
             width: 100%;
@@ -83,7 +83,7 @@
         }
 
         /* =========================================
-           FRAME 1: LOCK SCREEN KEYPAD STYLE
+           FRAME 1: GLITTERING LOCK SCREEN STYLING
            ========================================= */
         .lockscreen-split-layout {
             display: flex;
@@ -93,15 +93,63 @@
             justify-content: center;
             flex-grow: 1;
             margin: 20px 0;
+            position: relative;
         }
 
-        /* Left Side: Keypad Panel */
+        /* --- TWINKLING GLITTER & HEART OVERLAY EFFECT --- */
+        .glitter-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .sparkle {
+            position: absolute;
+            background: radial-gradient(circle, #ffffff 20%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+        
+        .sparkle.gold {
+            background: radial-gradient(circle, #ffe993 30%, transparent 70%);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.3) rotate(0deg); }
+            50% { opacity: 0.85; transform: scale(1.2) rotate(180deg); filter: drop-shadow(0 0 4px rgba(255,255,255,0.8)); }
+        }
+
+        /* Static ambient background hearts */
+        .static-mini-heart {
+            position: absolute;
+            color: rgba(121, 247, 149, 0.28);
+            font-size: 20px;
+            pointer-events: none;
+            z-index: 2;
+            animation: subtleGlow 4s infinite ease-in-out;
+            text-shadow: 0 0 8px rgba(121, 247, 149, 0.4);
+        }
+        
+        .static-mini-heart.pink-tint {
+            color: rgba(233, 166, 172, 0.28);
+            text-shadow: 0 0 8px rgba(233, 166, 172, 0.4);
+        }
+
+        @keyframes subtleGlow {
+            0%, 100% { transform: scale(0.9) rotate(-5deg); opacity: 0.25; }
+            50% { transform: scale(1.15) rotate(5deg); opacity: 0.65; filter: drop-shadow(0 0 6px currentcolor); }
+        }
+
         .keypad-wrapper-side {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
             max-width: 400px;
+            z-index: 5;
+            position: relative;
         }
 
         .welcome-title {
@@ -122,7 +170,6 @@
             line-height: 1.4;
         }
 
-        /* Indicator Hearts tracking typing */
         .indicator-hearts-row {
             display: flex;
             gap: 16px;
@@ -142,13 +189,14 @@
             text-shadow: 0 0 15px #79f795;
         }
 
-        /* Grid Setup */
         .heart-keypad-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 18px 24px;
             margin-bottom: 30px;
             width: 100%;
+            position: relative;
+            z-index: 4;
         }
 
         .keypad-btn {
@@ -156,7 +204,7 @@
             border: none;
             position: relative;
             width: 100%;
-            aspect-ratio: 1 / 1;
+            aspect-ratio: 1.05 / 1;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -167,58 +215,35 @@
             transform: scale(0.9);
         }
 
-        /* Custom drawn glossy green heart shapes using pseudo-elements */
-        .heart-shape-bg {
+        .heart-svg-layer {
             position: absolute;
-            width: 75%;
-            height: 75%;
-            background: linear-gradient(135deg, #184b24 0%, #0c2b14 100%);
-            box-shadow: inset 0 4px 6px rgba(255,255,255,0.15), 0 0 12px rgba(24,75,36,0.6);
-            border-radius: 50% 50% 0 0;
-            transform: rotate(-45deg);
-            top: 10%;
-            border: 1px solid #3fa857;
+            width: 100%;
+            height: 100%;
+            top: 0; left: 0;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 6px rgba(121, 247, 149, 0.45));
+            transition: filter 0.2s ease;
+            z-index: 1;
         }
-        .heart-shape-bg::before {
-            content: '';
-            position: absolute;
-            width: 100%; height: 100%;
-            background: inherit;
-            border-radius: 50%;
-            top: -50%; left: 0;
-            border-top: 1px solid #3fa857;
-            border-left: 1px solid #3fa857;
+        .keypad-btn:hover .heart-svg-layer {
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 12px rgba(121, 247, 149, 0.75));
         }
-        .heart-shape-bg::after {
-            content: '';
-            position: absolute;
-            width: 100%; height: 100%;
-            background: inherit;
-            border-radius: 50%;
-            top: 0; left: 50%;
-            border-top: 1px solid #3fa857;
-            border-right: 1px solid #3fa857;
+        
+        .keypad-btn.action-clear .heart-svg-layer {
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 6px rgba(233, 166, 172, 0.4));
         }
-
-        /* Action-specific button styling override */
-        .keypad-btn.action-clear .heart-shape-bg {
-            background: linear-gradient(135deg, #332023 0%, #1c1012 100%);
-            border-color: #7c3b43;
-            box-shadow: 0 0 10px rgba(124,59,67,0.4);
-        }
-        .keypad-btn.action-clear .heart-shape-bg::before,
-        .keypad-btn.action-clear .heart-shape-bg::after {
-            border-color: #7c3b43;
+        .keypad-btn.action-clear:hover .heart-svg-layer {
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 12px rgba(233, 166, 172, 0.7));
         }
 
         .btn-digit-val {
             position: relative;
             z-index: 5;
-            font-size: 1.7rem;
+            font-size: 1.65rem;
             font-weight: 600;
             color: #ffffff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.6);
             font-family: 'Fredoka', sans-serif;
+            margin-bottom: 4px;
         }
 
         .action-enter-bar {
@@ -239,6 +264,8 @@
             gap: 10px;
             box-shadow: 0 0 15px rgba(90,168,106,0.2);
             transition: all 0.2s ease;
+            position: relative;
+            z-index: 5;
         }
         .action-enter-bar:hover {
             background: rgba(121, 247, 149, 0.15);
@@ -246,13 +273,29 @@
             color: #ffffff;
         }
 
-        /* Right Side: Lockscreen Side Showcase Images */
+        .password-hint-text {
+            font-size: 0.88rem;
+            color: #5aa86a;
+            margin-top: 10px;
+            letter-spacing: 1px;
+            cursor: help;
+            transition: color 0.2s;
+            position: relative;
+            z-index: 5;
+        }
+        .password-hint-text:hover {
+            color: #79f795;
+            text-shadow: 0 0 8px rgba(121, 247, 149, 0.4);
+        }
+
+        /* --- THE RESTORED IMAGE FRAMES BLOCK STYLING --- */
         .lockscreen-showcase-side {
             display: flex;
             gap: 20px;
             flex-grow: 1;
             justify-content: center;
             max-width: 580px;
+            z-index: 5;
         }
 
         .showcase-matte {
@@ -271,6 +314,67 @@
             bottom: 15px; right: 15px;
             font-size: 1.5rem;
             filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+        }
+
+        /* =========================================
+           WRONG PASSWORD ERROR FRAME: SAD PANDA
+           ========================================= */
+        .error-panda-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            text-align: center;
+            padding: 40px 20px;
+            z-index: 5;
+        }
+
+        .panda-giant-avatar {
+            font-size: 6.5rem;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            animation: pandaSway 3s infinite ease-in-out;
+            margin-bottom: 25px;
+        }
+
+        @keyframes pandaSway {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-8px) rotate(3deg); }
+        }
+
+        .error-message-heading {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.8rem;
+            color: #e9a6ac;
+            margin-bottom: 12px;
+            text-shadow: 0 0 10px rgba(233,166,172,0.3);
+        }
+
+        .error-message-desc {
+            font-size: 1.1rem;
+            color: #d2edd6;
+            margin-bottom: 35px;
+            max-width: 460px;
+            line-height: 1.5;
+        }
+
+        .action-retry-btn {
+            padding: 12px 36px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            background: rgba(233, 166, 172, 0.1);
+            border: 2px solid #e9a6ac;
+            color: #eeb3ba;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(233,166,172,0.15);
+            transition: all 0.2s ease;
+        }
+        .action-retry-btn:hover {
+            background: #e9a6ac;
+            color: #0c0d0e;
+            box-shadow: 0 0 25px rgba(233,166,172,0.45);
         }
 
         /* =========================================
@@ -367,19 +471,11 @@
             border-bottom: 3px solid #e1d2be;
         }
 
-        .paper-sheet-note p {
-            text-align: center;
-            width: 100%;
-        }
-
-        .mini-mascot-footer {
-            font-size: 1.5rem;
-            margin-top: auto;
-            padding-top: 8px;
-        }
+        .paper-sheet-note p { text-align: center; width: 100%; }
+        .mini-mascot-footer { font-size: 1.5rem; margin-top: auto; padding-top: 8px; }
 
         /* =========================================
-           GLOBAL MUSIC FOOTER BAR MODULE
+           GLOBAL MUSIC FOOTER PLAYER BAR MODULE
            ========================================= */
         .music-footer-player {
             width: 100%;
@@ -397,12 +493,7 @@
             margin-top: 20px;
         }
 
-        .audio-identity-box {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            max-width: 50%;
-        }
+        .audio-identity-box { display: flex; align-items: center; gap: 12px; max-width: 50%; }
 
         .spinning-vinyl {
             width: 42px;
@@ -416,43 +507,14 @@
             animation: spinDisc 4s linear infinite;
         }
 
-        .vinyl-center-dot {
-            width: 10px;
-            height: 10px;
-            background-color: #79f795;
-            border-radius: 50%;
-        }
+        .vinyl-center-dot { width: 10px; height: 10px; background-color: #79f795; border-radius: 50%; }
+        @keyframes spinDisc { 100% { transform: rotate(360deg); } }
 
-        @keyframes spinDisc {
-            100% { transform: rotate(360deg); }
-        }
+        .track-strings-metadata { overflow: hidden; white-space: nowrap; }
+        .track-title-text { font-size: 0.9rem; font-weight: 600; color: #ffffff; text-overflow: ellipsis; overflow: hidden; }
+        .track-status-text { font-size: 0.7rem; color: #59a86a; margin-top: 2px; }
 
-        .track-strings-metadata {
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .track-title-text { 
-            font-size: 0.9rem; 
-            font-weight: 600; 
-            color: #ffffff;
-            text-overflow: ellipsis;
-            overflow: hidden;
-        }
-        
-        .track-status-text { 
-            font-size: 0.7rem; 
-            color: #59a86a; 
-            margin-top: 2px; 
-        }
-
-        .audio-controls-box {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            color: #a3dfb3;
-            font-size: 1rem;
-        }
+        .audio-controls-box { display: flex; align-items: center; gap: 16px; color: #a3dfb3; font-size: 1rem; }
 
         .circle-toggle-btn {
             width: 34px;
@@ -468,44 +530,25 @@
             cursor: pointer;
         }
 
-        .timeline-duration {
-            font-size: 0.75rem; 
-            color: #568a61;
-        }
+        .timeline-duration { font-size: 0.75rem; color: #568a61; }
 
         /* =========================================
-           ADAPTIVE VIEWPORT MEDIA QUERIES (Mobile View Setup)
+           ADAPTIVE VIEWPORT MEDIA RESPONSIVITY RULES
            ========================================= */
         @media (max-width: 860px) {
-            .lockscreen-split-layout {
-                flex-direction: column-reverse;
-                gap: 25px;
-            }
-            .lockscreen-showcase-side {
-                width: 100%;
-                max-width: 400px;
-            }
-            .showcase-matte {
-                height: 220px;
-            }
+            .lockscreen-split-layout { flex-direction: column-reverse; gap: 25px; }
+            .lockscreen-showcase-side { width: 100%; max-width: 400px; }
+            .showcase-matte { height: 220px; }
         }
 
         @media (max-width: 768px) {
             body { padding: 10px; }
-            .app-container {
-                max-width: 440px;
-                height: auto;
-                min-height: 850px;
-                padding: 18px 14px 14px 14px;
-            }
+            .app-container { max-width: 440px; height: auto; min-height: 850px; padding: 18px 14px 14px 14px; }
             .welcome-title { font-size: 2.8rem; }
             .header-title { font-size: 2.6rem; margin-bottom: 12px; }
             .footer-motto { font-size: 2.3rem; margin-top: 12px; margin-bottom: 12px; }
             
-            .surprises-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
+            .surprises-grid { grid-template-columns: 1fr; gap: 20px; }
             .card-column { padding: 12px; min-height: auto; }
             .ribbon-bow { font-size: 1.6rem; top: -14px; }
             .column-number-label { font-size: 0.85rem; margin-bottom: 8px; }
@@ -530,11 +573,15 @@
         <div id="lockscreenView" class="frame-view active-view">
             <div class="lockscreen-split-layout">
                 
+                <div class="glitter-layer"></div>
+                
                 <div class="keypad-wrapper-side">
-                    <h1 class="welcome-title">Welcome ♡</h1>
-                    <p class="password-instructions">Enter the password<br>to unlock your surprise</p>
+                    <div id="keypadHeartsBackground" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1;"></div>
+
+                    <h1 class="welcome-title" style="position: relative; z-index: 5;">Welcome ♡</h1>
+                    <p class="password-instructions" style="position: relative; z-index: 5;">Enter the password<br>to unlock your surprise</p>
                     
-                    <div class="indicator-hearts-row">
+                    <div class="indicator-hearts-row" style="position: relative; z-index: 5;">
                         <span class="indicator-heart">♥</span>
                         <span class="indicator-heart">♥</span>
                         <span class="indicator-heart">♥</span>
@@ -542,21 +589,55 @@
                     </div>
 
                     <div class="heart-keypad-grid">
-                        <button class="keypad-btn" onclick="pressDigit('1')"><div class="heart-shape-bg"></div><span class="btn-digit-val">1</span></button>
-                        <button class="keypad-btn" onclick="pressDigit('2')"><div class="heart-shape-bg"></div><span class="btn-digit-val">2</span></button>
-                        <button class="keypad-btn" onclick="pressDigit('3')"><div class="heart-shape-bg"></div><span class="btn-digit-val">3</span></button>
-                        <button class="keypad-btn" onclick="pressDigit('4')"><div class="heart-shape-bg"></div><span class="btn-digit-val">4</span></button>
-                        <button class="keypad-btn" onclick="pressDigit('5')"><div class="heart-shape-bg"></div><span class="btn-digit-val">5</span></button>
-                        <button class="keypad-btn" onclick="pressDigit('6')"><div class="heart-shape-bg"></div><span class="btn-digit-val">6</span></button>
-                        <button class="keypad-btn" onclick="pressDigit('7')"><div class="heart-shape-bg"></div><span class="btn-digit-val">7</span></button>
-                        <button class="keypad-btn" onclick="pressDigit('8')"><div class="heart-shape-bg"></div><span class="btn-digit-val">8</span></button>
-                        <button class="keypad-btn" onclick="pressDigit('9')"><div class="heart-shape-bg"></div><span class="btn-digit-val">9</span></button>
+                        <button class="keypad-btn" onclick="pressDigit('1')">
+                            <svg class="heart-svg-layer" viewBox="0 0 24 24"><path fill="#0f3518" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="btn-digit-val">1</span>
+                        </button>
+                        <button class="keypad-btn" onclick="pressDigit('2')">
+                            <svg class="heart-svg-layer" viewBox="0 0 24 24"><path fill="#0f3518" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="btn-digit-val">2</span>
+                        </button>
+                        <button class="keypad-btn" onclick="pressDigit('3')">
+                            <svg class="heart-svg-layer" viewBox="0 0 24 24"><path fill="#0f3518" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="btn-digit-val">3</span>
+                        </button>
+                        <button class="keypad-btn" onclick="pressDigit('4')">
+                            <svg class="heart-svg-layer" viewBox="0 0 24 24"><path fill="#0f3518" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="btn-digit-val">4</span>
+                        </button>
+                        <button class="keypad-btn" onclick="pressDigit('5')">
+                            <svg class="heart-svg-layer" viewBox="0 0 24 24"><path fill="#0f3518" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="btn-digit-val">5</span>
+                        </button>
+                        <button class="keypad-btn" onclick="pressDigit('6')">
+                            <svg class="heart-svg-layer" viewBox="0 0 24 24"><path fill="#0f3518" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="btn-digit-val">6</span>
+                        </button>
+                        <button class="keypad-btn" onclick="pressDigit('7')">
+                            <svg class="heart-svg-layer" viewBox="0 0 24 24"><path fill="#0f3518" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="btn-digit-val">7</span>
+                        </button>
+                        <button class="keypad-btn" onclick="pressDigit('8')">
+                            <svg class="heart-svg-layer" viewBox="0 0 24 24"><path fill="#0f3518" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="btn-digit-val">8</span>
+                        </button>
+                        <button class="keypad-btn" onclick="pressDigit('9')">
+                            <svg class="heart-svg-layer" viewBox="0 0 24 24"><path fill="#0f3518" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="btn-digit-val">9</span>
+                        </button>
                         <div style="visibility: hidden;"></div>
-                        <button class="keypad-btn" onclick="pressDigit('0')"><div class="heart-shape-bg"></div><span class="btn-digit-val">0</span></button>
-                        <button class="keypad-btn action-clear" onclick="clearDigits()"><div class="heart-shape-bg"></div><span class="btn-digit-val" style="font-size: 1.2rem;">⌫</span></button>
+                        <button class="keypad-btn" onclick="pressDigit('0')">
+                            <svg class="heart-svg-layer" viewBox="0 0 24 24"><path fill="#0f3518" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="btn-digit-val">0</span>
+                        </button>
+                        <button class="keypad-btn action-clear" onclick="clearDigits()">
+                            <svg class="heart-svg-layer" viewBox="0 0 24 24"><path fill="#3a181c" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="btn-digit-val" style="font-size: 1.1rem; margin-bottom: 2px;">⌫</span>
+                        </button>
                     </div>
 
                     <button class="action-enter-bar" onclick="validatePassword()">♥ ENTER ♥</button>
+                    <span class="password-hint-text" onclick="alert('Hint: Code combination is 1234 🐻')">Hint</span>
                 </div>
 
                 <div class="lockscreen-showcase-side">
@@ -564,6 +645,17 @@
                     <div class="showcase-matte" style="background-image: url('img2.jpg');"></div>
                 </div>
 
+            </div>
+        </div>
+
+        <div id="errorPandaView" class="frame-view">
+            <div class="error-panda-container">
+                <div class="panda-giant-avatar">🐼💔</div>
+                <h2 class="error-message-heading">Oh No! Incorrect Passcode...</h2>
+                <p class="error-message-desc">
+                    The little panda feels super sad because it can't show you the birthday magic yet! Please update with the correct password.
+                </p>
+                <button class="action-retry-btn" onclick="returnToKeypad()">Try Again 🥺</button>
             </div>
         </div>
 
@@ -633,9 +725,57 @@
     </div>
 
     <script>
-        // Change '1234' to your own selected password code combination string
         const CORRECT_PASSWORD = '1234';
         let currentInputCode = "";
+
+        // --- DYNAMIC GLITTER & TARGETED STATIC HEARTS GENERATOR ---
+        function generateGlitterEffect() {
+            const generalGlitterLayer = document.querySelector('.glitter-layer');
+            const keypadHeartsContainer = document.getElementById('keypadHeartsBackground');
+            
+            const sparkleCount = 20; 
+            const heartGridCount = 18; // Generates a dense cluster specifically inside the keypad layout area box
+            
+            // Generate ambient general background sparkles
+            for(let i = 0; i < sparkleCount; i++) {
+                const sparkle = document.createElement('div');
+                const isGold = Math.random() > 0.5;
+                
+                sparkle.className = `sparkle ${isGold ? 'gold' : ''}`;
+                sparkle.style.top = `${Math.random() * 100}%`;
+                sparkle.style.left = `${Math.random() * 100}%`;
+                
+                const size = Math.random() * 5 + 3; 
+                sparkle.style.width = `${size}px`;
+                sparkle.style.height = `${size}px`;
+                
+                sparkle.style.animationDelay = `${Math.random() * 3}s`;
+                sparkle.style.animationDuration = `${Math.random() * 2 + 2}s`;
+                
+                generalGlitterLayer.appendChild(sparkle);
+            }
+
+            // Generate static hearts positioned directly behind the numbers column structure
+            for(let j = 0; j < heartGridCount; j++) {
+                const heart = document.createElement('div');
+                const isPink = Math.random() > 0.4; 
+                
+                heart.className = `static-mini-heart ${isPink ? 'pink-tint' : ''}`;
+                heart.innerHTML = Math.random() > 0.5 ? '♥' : '♡';
+                
+                // Keep positions strictly clustered over the keypad width boundaries
+                heart.style.left = `${Math.random() * 92 + 4}%`;
+                heart.style.top = `${Math.random() * 70 + 20}%`;
+                
+                heart.style.fontSize = `${Math.random() * 10 + 16}px`;
+                heart.style.animationDelay = `${Math.random() * 4}s`;
+                heart.style.animationDuration = `${Math.random() * 2 + 3}s`;
+                
+                keypadHeartsContainer.appendChild(heart);
+            }
+        }
+        
+        generateGlitterEffect();
 
         function updateIndicatorHearts() {
             const hearts = document.querySelectorAll('.indicator-heart');
@@ -662,15 +802,20 @@
 
         function validatePassword() {
             if (currentInputCode === CORRECT_PASSWORD) {
-                // Switch Panels instantly and smoothly
                 document.getElementById('lockscreenView').classList.remove('active-view');
+                document.getElementById('errorPandaView').classList.remove('active-view');
                 document.getElementById('dashboardView').classList.add('active-view');
             } else {
-                // Flash alert on mistake and wipe string data clean
-                alert("Incorrect code! Please try again 🥺");
-                currentInputCode = "";
-                updateIndicatorHearts();
+                document.getElementById('lockscreenView').classList.remove('active-view');
+                document.getElementById('errorPandaView').classList.add('active-view');
             }
+        }
+
+        function returnToKeypad() {
+            currentInputCode = "";
+            updateIndicatorHearts();
+            document.getElementById('errorPandaView').classList.remove('active-view');
+            document.getElementById('lockscreenView').classList.add('active-view');
         }
     </script>
 </body>
