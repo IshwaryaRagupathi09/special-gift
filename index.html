@@ -537,6 +537,27 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.01); }
         }
+
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+        }
+        
+        .image-wrapper img { width: 100%; height: auto; }
+        
+        /* Hotspots - Adjust 'top' and 'left' percentages based on your specific image layout */
+        .hotspot-yes, .hotspot-no {
+            position: absolute;
+            width: 30%; /* Adjust size to cover the button */
+            height: 10%;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.05); /* Optional: remove this after testing */
+        }
+        
+        .hotspot-yes { top: 75%; left: 15%; }
+        .hotspot-no  { top: 75%; left: 55%; }
+        
     </style>
 </head>
 <body>
@@ -606,10 +627,18 @@
 
         <div id="cakeView" class="frame-view">
             <div class="cake-frame-container">
-                <div class="cake-image-box clickable-cake" onclick="proceedToDashboard()">
+                <div class="cake-image-box clickable-cake" onclick="proceedToFrame3()">
                     <img src="Frame2.jpeg" alt="Click to Blow the Candle">
                 </div>
                 </div>
+        </div>
+
+        <div id="frame3View" class="frame-view">
+            <div class="image-wrapper">
+                <img src="Frame3.jpeg" alt="Surprise Choice">
+                <div class="hotspot-yes" onclick="showDashboard()"></div>
+                <div class="hotspot-no" onclick="showAngryPanda()"></div>
+            </div>
         </div>
 
         <div id="dashboardView" class="frame-view">
@@ -644,7 +673,7 @@
                 <div class="card-column col-red">
                     <span class="ribbon-bow">🎁</span>
                     <div class="column-number-label">3. My Heart</div>
-                    <div class="photo-frame" style="background-image: url('img5.jpg.webp');"></div>
+                    <div class="photo-frame" style="background-image: url('img5.jpg.jpeg');"></div>
                     <div class="paper-sheet-note">
                         <div style="font-size: 2.4rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));">🐻‍❄️❤️🐻</div>
                         <p style="font-weight: bold; color: #6e1c25; font-size: 1.4rem; line-height: 1.3;">
@@ -655,9 +684,7 @@
             </div>
 
             <h2 class="footer-motto">♡ Forever & Always ♡</h2>
-        </div>
-
-        <div class="music-footer-player">
+            <div class="music-footer-player">
             <div class="audio-identity-box">
                 <div class="spinning-vinyl">
                     <div class="vinyl-center-dot"></div>
@@ -670,8 +697,9 @@
             <div class="audio-controls-box">
                 <span>⏮</span>
                 <div class="circle-toggle-btn">⏸</div>
-                <span>⏭</span>
-                <span class="timeline-duration">00:45 / 04:48</span>
+                    <span>⏭</span>
+                    <span class="timeline-duration">00:45 / 04:48</span>
+                </div>
             </div>
         </div>
 
@@ -740,6 +768,34 @@
         function proceedToDashboard() {
             document.getElementById('cakeView').classList.remove('active-view');
             document.getElementById('dashboardView').classList.add('active-view');
+        }
+
+        function proceedToFrame3() {
+            document.getElementById('cakeView').classList.remove('active-view');
+            document.getElementById('frame3View').classList.add('active-view');
+        }
+
+        function showDashboard() {
+            document.getElementById('frame3View').classList.remove('active-view');
+            document.getElementById('dashboardView').classList.add('active-view');
+        }
+        
+        function showAngryPanda() {
+            // Reuse the existing errorPandaView logic or create a specific one
+            document.getElementById('frame3View').classList.remove('active-view');
+            const errorView = document.getElementById('errorPandaView');
+            errorView.classList.add('active-view');
+            
+            // Update the error message for this specific case
+            errorView.querySelector('.error-message-heading').innerText = "How dare you?!";
+            errorView.querySelector('.error-message-desc').innerText = "You have to say yes to your birthday surprise! Try again.";
+            
+            // Reset the retry button to go back to Frame 3 instead of Lockscreen
+            const btn = errorView.querySelector('.action-retry-btn');
+            btn.onclick = function() {
+                errorView.classList.remove('active-view');
+                document.getElementById('frame3View').classList.add('active-view');
+            };
         }
 
         function returnToKeypad() {
