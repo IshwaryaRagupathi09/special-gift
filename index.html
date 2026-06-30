@@ -311,14 +311,15 @@
 
         .showcase-matte {
             width: 50%;
-            height: 460px;
+            /* CHANGED: Removed the rigid 460px height so the box collapses down to match the image size */
+            height: auto; 
+            /* CHANGED: Forces the container to follow a standard photo aspect ratio (4:3 or 16:9 works great) */
+            aspect-ratio: 4 / 3; 
             border-radius: 20px;
             border: 3px solid #1c3d23;
-            /* CHANGED from cover to contain so the left/right sides never get clipped */
-            background-size: contain; 
-            background-repeat: no-repeat;
+            /* CHANGED: Changed back to cover because the aspect-ratio now guarantees a perfect edge-to-edge fit */
+            background-size: cover; 
             background-position: center center; 
-            background-color: rgba(0, 0, 0, 0.4); /* Adds a subtle dark backing for any empty space */
             box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             position: relative;
         }
