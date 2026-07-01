@@ -623,6 +623,10 @@
 </head>
 <body>
 
+    <audio id="bgMusic" loop>
+        <source src="Uyire_amaran.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="ambient-glow-core"></div>
 
     <div class="app-container">
@@ -816,6 +820,7 @@
 
         function validatePassword() {
             if (currentInputCode === CORRECT_PASSWORD) {
+                playMusic();
                 document.getElementById('lockscreenView').classList.remove('active-view');
                 document.getElementById('errorPandaView').classList.remove('active-view');
                 document.getElementById('cakeView').classList.add('active-view');
@@ -823,6 +828,32 @@
                 document.getElementById('lockscreenView').classList.remove('active-view');
                 document.getElementById('errorPandaView').classList.add('active-view');
             }
+        }
+
+        let musicStarted = false;
+
+        function playMusic() {
+            if (!musicStarted) {
+                const music = document.getElementById('bgMusic');
+                music.volume = 0.5;
+                
+                // Use a promise to ensure it plays
+                music.play().then(() => {
+                    musicStarted = true;
+                    console.log("Music started successfully.");
+                }).catch(error => {
+                    console.warn("Autoplay blocked: Music will start on next click.", error);
+                });
+            }
+        }
+        
+        // Update your main transition function
+        function goToFrame(targetId) {
+            // Attempt to start music whenever a user makes a transition
+            playMusic();
+            
+            document.querySelectorAll('.frame-view').forEach(f => f.classList.remove('active-view'));
+            document.getElementById(targetId).classList.add('active-view');
         }
 
         function proceedToDashboard() {
