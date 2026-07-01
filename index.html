@@ -692,8 +692,8 @@
         </div>
 
         <div id="dashboardView" class="frame-view">
+            <h1 class="header-title">♡ Your 3 Surprises ♡</h1>
             <div class="surprises-grid">
-                <h1 class="header-title">♡ Your 3 Surprises ♡</h1>
                 <!-- Grid Slot 1 -->
                 <div class="gift-wrapper" onclick="revealSurprise(this)">
                     <div class="gift-box">🎁</div>
@@ -870,16 +870,15 @@
             const box = wrapper.querySelector('.gift-box');
             const content = wrapper.querySelector('.surprise-content');
             
-            // Hide the box
+            // Hide gift box, show the surprise
             box.style.display = 'none';
-            
-            // Show the hidden content within this specific grid cell
             content.style.display = 'block';
             
-            // Prevent re-clicking
-            wrapper.style.pointerEvents = 'none';
+            // Remove click ability from this specific box
+            wrapper.style.cursor = 'default';
+            wrapper.onclick = null; 
         }
-
+        
         function returnToKeypad() {
             currentInputCode = "";
             updateIndicatorHearts();
