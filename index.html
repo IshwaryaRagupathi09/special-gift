@@ -594,7 +594,32 @@
         }
         
         /* The gift box stays centered until clicked */
-        .gift-box { font-size: 8rem; }
+       /* Increase size and add a 'pulsing' attention-grabber */
+        .gift-box {
+            font-size: 8rem; /* Dramatically increased size */
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Combined shaking and subtle scale-up */
+            animation: urgentShake 2.5s infinite ease-in-out;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
+            transition: transform 0.2s;
+        }
+        
+        /* More dynamic 'Urgent' shaking */
+        @keyframes urgentShake {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            10%, 30%, 50%, 70%, 90% { transform: rotate(-8deg); }
+            20%, 40%, 60%, 80% { transform: rotate(8deg); }
+            15% { transform: scale(1.1); } /* Subtle jump to catch the eye */
+        }
+        
+        /* Hover effect to encourage clicking */
+        .gift-box:hover {
+            transform: scale(1.2) rotate(0deg);
+            animation: none; /* Stop shaking on hover so it's easier to click */
+        }
         
         /* The surprise content is absolute to fill the wrapper completely */
         .surprise-content {
