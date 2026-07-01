@@ -570,32 +570,35 @@
         .hotspot-no  { top: 75%; left: 55%; }
 
         /* Maintain your existing .surprises-grid styles */
+        /* Force the grid to have layout even if empty */
         .surprises-grid {
-            display: grid;
+            display: grid !important;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             width: 100%;
+            min-height: 400px; /* Minimum height for the whole row */
+            padding: 20px;
         }
         
-        /* Ensure the grid cells exist even before content is revealed */
+        /* Force the boxes to be visible and have size */
         .gift-wrapper {
-            cursor: pointer;
-            display: flex;
+            display: flex !important;
             justify-content: center;
             align-items: center;
-            min-height: 400px; /* IMPORTANT: Ensures the box has space to show */
-            background: rgba(255, 255, 255, 0.05); /* Add a faint background to see the cell */
+            min-height: 350px; 
+            border: 2px dashed #e2c067; /* Gold dashed border makes it visible */
             border-radius: 24px;
-            border: 2px solid rgba(226, 192, 103, 0.3); /* Gold border for elegance */
+            background: rgba(255, 255, 255, 0.03);
+            cursor: pointer;
             position: relative;
-            transition: all 0.3s ease;
         }
         
-        /* Ensure the gift box itself is centered and visible */
         .gift-box {
+            display: block !important;
             font-size: 5rem;
-            display: flex; /* Force visibility */
-            animation: shakeGift 2s infinite ease-in-out;
+            visibility: visible !important;
+            opacity: 1 !important;
+            z-index: 10;
         }
         
         /* Ensure the image doesn't overflow the grid cell */
@@ -688,7 +691,7 @@
             </div>
         </div>
 
-        <div id="frame4View" class="frame-view">
+        <div id="dashboardView" class="frame-view">
             <div class="surprises-grid">
                 <h1 class="header-title">♡ Your 3 Surprises ♡</h1>
                 <!-- Grid Slot 1 -->
